@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Compass Test</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/style.css" rel="stylesheet">
+        <style>
+            .compass { margin: 20px;}
+            .disc {
+                position: absolute;
+                z-index: 200;
+                background: url('images/disc.svg') no-repeat left top;
+                width: 160px;
+                height: 160px;
+            }
+            .arrow {
+                position: absolute;
+                z-index: 300;
+                background: url('images/arrow.svg') no-repeat left top;
+                width: 160px;
+                height: 160px;
+                transform: rotate(0);
+                transition: transform 0.5s ease-in-out;
+            }
+            .arrow:hover {
+                transform: rotate(225deg);
+                transition: transform 0.7s ease-in-out;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="compass">
+        <div class="arrow" id="arrow"></div>
+        <div class="disc"></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            setTimeout(function() {
+                $(".arrow").css("transform", "rotate(90deg)");
+            },2000)
+            
+            //$(".arrow:hover").css("transform", "rotate(225deg)")
+            // var prev = $(".arrow").css("transform");
+            $(".arrow").hover(function() {
+                $(".arrow").css("transform", "rotate(0deg)");
+                console.log("hover in");
+            }, function() {
+                $(".arrow").css("transform", "rotate(90deg");
+                console.log("hover out");
+            });
+            // var arrow = document.getElementById("arrow");
+            // console.log(arrow.id);
+            // arrow.style.transform = "rotate(90deg)";
+            // console.log(arrow)
+        });
+    </script>
+    </body>
+</html>
