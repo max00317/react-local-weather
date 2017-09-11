@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>FCC Local Weather Ajax Call</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link href='https://fonts.googleapis.com/css?family=Yellowtail' rel='stylesheet'> -->
+    <!-- <link href='https://fonts.googleapis.com/css?family=Italianno' rel='stylesheet'> -->
+    <link href="css/ajax.css" rel="stylesheet">
+</head>
+
+<body>
+    <header></header>
+
+    <main role="main" id="main">
+        <section class="container">
+            <h1>Local Weather App</h1>
+            <p>
+                <div>Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
+            </p>
+
+            <button id="get-weather" class="">Get weather...</button>
+            <button id="get-geolocation" class="">Use my location</button>
+
+
+        </section>
+
+        <section id="debug-container">
+            <h2>Debug Info</h2>
+            <div class="debug">
+                <h3>Hard coded</h3>
+                <div id="hard-coded"></div>
+            </div>
+
+            <div class="debug">
+                <hr>
+                <h3>Traverse JSON</h3>
+                <div id="traverse-json"></div>
+            </div>
+
+            <div class="debug">
+                <hr>
+                <h3>JSON fields loop</h3>
+                <div id="json-fields-loop"></div>
+            </div>
+
+            <div class="debug">
+                <hr>
+                <h3>Raw Output</h3>
+                <div id="output"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+
+    </footer>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <!-- <script src="https://use.fontawesome.com/b8e54d5fef.js"></script> -->
+    <script src="js/ajax.js"></script>
+    <script>
+        $(document).ready(function () {
+            init();
+        });
+    </script>
+</body>
+
+</html>
