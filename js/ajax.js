@@ -29,7 +29,6 @@ function getWeather() {
             units: "imperial"
         },
         jsonpCallback: "displayWeather"
-        // success: "displayWeather"
     });
 }
 
@@ -98,6 +97,7 @@ function jsonFieldsLoop(json, htmlStr) {
 
     return htmlStr;
 }
+
 // Vanilla JS object loop
 function traverse(obj, htmlStr) {
     htmlStr += "<ul>";

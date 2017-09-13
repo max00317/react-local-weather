@@ -14,57 +14,111 @@
 <body>
     <header></header>
 
-    <main role="main" id="main">
-        <section class="container">
-            <h1>Local Weather App</h1>
-            <p>
-                <div>Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
-            </p>
+    <main class="ui fluid container" role="main" id="main">
+        <section class="ui vertical masthead center aligned segment">
+            <div class="ui text container" id="content">
+                <h1 id="header">Local Weather App</h1>
+                <i id="debug-btn" class="link bordered setting icon" ></i>
+                <!-- data-tooltip="Show/Hide Console" data-variation="inverted" -->
+                <p>
+                    <div>Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
+                </p>
 
-            <button id="get-weather" class="">Get weather...</button>
-            <button id="get-geolocation" class="">Use my location</button>
+                
+                <div class="ui buttons tiny" id="temp-toggle">
+                    <button class="ui button">C</button>
+                    <div class="or"></div>
+                    <button class="ui button active positive">F</button>
+                </div>
+                <button class="ui button positive tiny" id="use-my-location">Use my location</button>
 
+                <div class="ui grid">
+                    <div class="four wide column">
+                        <div class="compass1">
+                            <div id="compass-label">Wind Direction</div>
+                            <div id="compass-deg"></div>
+                            <img class="arrow1" src="images/arrow.svg" alt="arrow">
+                            <img class="disc1" src="images/disc.svg" alt="disc">
+                            <div class="debug"></div> 
+                        </div>
+                    </div>
+                    <div class="eight wide column">
+                        <div class="ui segment"id="temp-group">
+                            <div id="loc-header-container">
+                                <div class="ui large header" id="city"></div>
+                                <img id="icon" src="">
+                            </div>
+                            <div class="ui huge header" id="temp"></div>
+                            <div id="high-low"><span id="high" class="ui red label"></span> <span id="low" class="ui blue label"></span></div>
+                            <div><span id="sky"></span> with <span id="humidity"></span> humidity</div>
+                            <div>Wind: <span id="wind"></span></div>
+                            <div>Sunrise: <span id="sunrise"></span> - Sunset: <span id="sunset"></span></div>
+                        </div>
+                    </div>
+                    <div class="four wide column" id="city-buttons">
+                        <button class="ui button" id="btn-Nairobi" data-tooltip="This is for my friend in Kenya who's gonna run her own game dev company one day!" data-position="left center">Nairobi</button>
 
+                        <button class="ui button" id="btn-Frankfurt" data-tooltip="This is for Cuddle Bear & his owner who has mad CSS skills :)" data-position="left center">Frankfurt</button>
+
+                        <button class="ui button" id="btn-Lagos" data-tooltip="This is for my friend in Nigeria who likes Simi and the finer things in life! :)" data-position="left center">Lagos</button>
+
+                        <button class="ui button" id="btn-Cape-Cod" data-tooltip="This is for my fellow countryman on the other coast who always has words of encouragement for everyone!" data-position="left center">Cape Cod</button>
+
+                        <button class="ui button" id="btn-Paris" data-tooltip="This is for Thea & Meikei. I don't know where you live but Paris can be where you two soul mates meet for coffee one day. :)" data-position="left center" data-variation="inverted">Paris</button>
+
+                        <button class="ui button" id="btn-Los-Angeles" data-tooltip="This is the weather in my part of the world. Good for my hikes & runs." data-position="left center" data-variation="inverted">Los Angeles</button>
+                    </div>
+                </div>
+
+                <!-- <p>something else</p> -->
+            </div> 
         </section>
 
-        <section id="debug-container">
-            <h2>Debug Info</h2>
-            <div class="debug">
-                <h3>Hard coded</h3>
-                <div id="hard-coded"></div>
+        <div class="ui text container" id="debug-container">
+        <h2 class ="ui small center aligned top attached block header">Debug Info</h2>
+        <section class="ui attached segment" id="debug-content">
+
+            <div class="ui top attached tabular stackable menu">
+                <a class="active item column" data-tab="first">Hard coded</a>
+                <a class="item column" data-tab="second">Traverse JSON</a>
+                <a class="item column" data-tab="third">JSON Fields Loop</a>
+                <a class="item column" data-tab="fourth">Raw Output</a>
             </div>
 
-            <div class="debug">
-                <hr>
-                <h3>Traverse JSON</h3>
+            <div class="ui bottom attached active tab segment" data-tab="first" id="hard-coded">
+                
+            </div>
+            <div class="ui bottom attached tab segment " data-tab="second">
+                <!-- <h3>Traverse JSON</h3> -->
                 <div id="traverse-json"></div>
             </div>
-
-            <div class="debug">
-                <hr>
-                <h3>JSON fields loop</h3>
+            <div class="ui bottom attached tab segment" data-tab="third">
+                <!-- <h3>JSON Fields loop</h3> -->
                 <div id="json-fields-loop"></div>
             </div>
-
-            <div class="debug">
-                <hr>
-                <h3>Raw Output</h3>
+            <div class="ui bottom attached tab segment" data-tab="fourth">
+                <!-- <h3>Raw Output</h3> -->
                 <div id="output"></div>
             </div>
         </section>
+        </div>
+
     </main>
 
     <footer>
 
     </footer>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
     <script src="semantic/semantic.min.js"></script>
     <!-- <script src="https://use.fontawesome.com/b8e54d5fef.js"></script> -->
     <script src="js/script.js"></script>
     <script>
         $(document).ready(function () {
             init();
+            $('.menu .item').tab();
+            $('.activating.element').popup();
         });
     </script>
 </body>

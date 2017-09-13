@@ -4,9 +4,9 @@
         <title>Compass Test</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="css/style.css" rel="stylesheet">
+        <link href="css/ajax.css" rel="stylesheet">
         <style>
-            .compass { margin: 20px;}
+            .compass { margin: 20px; position:relative; width:200px; height:200px;}
             .disc {
                 position: absolute;
                 z-index: 200;
@@ -27,6 +27,25 @@
                 transform: rotate(225deg);
                 transition: transform 0.7s ease-in-out;
             }
+            .compass1 { margin: 20px; position:relative;}
+            .disc1 {
+                position: absolute;
+                z-index: 200;
+                /* width: 160px;
+                height: 160px; */
+            }
+            .arrow1 {
+                position: absolute;
+                z-index: 300;
+                /* width: 160px;
+                height: 160px; */
+                transform: rotate(0);
+                transition: transform 0.5s ease-in-out;
+            }
+            .arrow1:hover {
+                transform: rotate(225deg);
+                transition: transform 0.7s ease-in-out;
+            }
         </style>
     </head>
     <body>
@@ -34,6 +53,12 @@
         <div class="arrow" id="arrow"></div>
         <div class="disc"></div>
     </div>
+
+    <div class="compass1" style="width:70%;">
+        <img class="arrow1" src="images/arrow.svg" alt="arrow" style="width:100%">
+        <img class="disc1" src="images/disc.svg" alt="disc"  style="width:100%">
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
