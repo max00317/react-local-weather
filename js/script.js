@@ -353,7 +353,7 @@ function doWeatherCondition(conditionCode, timeDay) {
             break;
         case (conditionCode < 805): //Clouds
             if (timeDay === "d") {
-                bgImage = "clouds-d.jpg";
+                bgImage = "cloudy-sky.jpg";
             } else {
                 bgImage = "clouds-n.jpeg";
             }
@@ -371,7 +371,7 @@ function doWeatherCondition(conditionCode, timeDay) {
         default:
             bgImage = "";    
     }
-    bgImage = "path.jpg";
+    // bgImage = "cloudy-sky.jpg";
     // document.body.style.backgroundImage = "url('../images/" + bgImage + "');";
     // console.log($("body").css("background", "#ccc url('../images/purple-tree.jpg') no-repeat fixed center center cover;"));
     //$("body").css("background-image", "url('../images/purple-tree.jpg')");
