@@ -34,25 +34,32 @@
 
                 <div class="ui grid">
                     <div class="four wide column">
-                        <div class="compass1">
+                        <div class="compass">
                             <div id="compass-label">Wind Direction</div>
                             <div id="compass-deg"></div>
-                            <img class="arrow1" src="images/arrow.svg" alt="arrow">
-                            <img class="disc1" src="images/disc.svg" alt="disc">
-                            <div class="debug"></div> 
+                            <img class="arrow" src="images/arrow.svg" alt="arrow">
+                            <img class="disc" src="images/disc.svg" alt="disc"> 
+                        </div>
+                        <div class="ui segment" id="compass-stats">
+                            <div class="hidden">Code: <span id="conditionCode"></span></div>
+                            <div>Lat: <span id="lat"></span></div>
+                            <div>Lon: <span id="lon"></span></div>
                         </div>
                     </div>
                     <div class="eight wide column">
-                        <div class="ui segment"id="temp-group">
+                        <div class="ui segment" id="temp-group">
                             <div id="loc-header-container">
                                 <div class="ui large header" id="city"></div>
                                 <img id="icon" src="">
                             </div>
+                            <div id="localTime">&nbsp;</div>
                             <div class="ui huge header" id="temp"></div>
                             <div id="high-low"><span id="high" class="ui red label"></span> <span id="low" class="ui blue label"></span></div>
                             <div><span id="sky"></span> with <span id="humidity"></span> humidity</div>
-                            <div>Wind: <span id="wind"></span></div>
-                            <div>Sunrise: <span id="sunrise"></span> - Sunset: <span id="sunset"></span></div>
+                            <div>Wind: <span id="wind-dir"></span> at <span id="wind-speed"></span></div>
+                            <div>Visibility: <span id="vis"></span></div>
+                            <div class="hidden">Sunrise: <span id="sunrise"></span> - Sunset: <span id="sunset"></span></div>
+                            
                         </div>
                     </div>
                     <div class="four wide column" id="city-buttons">
@@ -65,6 +72,8 @@
                         <button class="ui button" id="btn-Cape-Cod" data-tooltip="This is for my fellow countryman on the other coast who always has words of encouragement for everyone!" data-position="left center">Cape Cod</button>
 
                         <button class="ui button" id="btn-Paris" data-tooltip="This is for Thea & Meikei. I don't know where you live but Paris can be where you two soul mates meet for coffee one day. :)" data-position="left center" data-variation="inverted">Paris</button>
+
+                        <button class="ui button" id="btn-London" data-tooltip="This is for my friend in London who is a star of the stage and screen (computer screen). :)" data-position="left center" data-variation="inverted">London</button>
 
                         <button class="ui button" id="btn-Los-Angeles" data-tooltip="This is the weather in my part of the world. Good for my hikes & runs." data-position="left center" data-variation="inverted">Los Angeles</button>
                     </div>
@@ -89,7 +98,6 @@
                 
             </div>
             <div class="ui bottom attached tab segment " data-tab="second">
-                <!-- <h3>Traverse JSON</h3> -->
                 <div id="traverse-json"></div>
             </div>
             <div class="ui bottom attached tab segment" data-tab="third">
