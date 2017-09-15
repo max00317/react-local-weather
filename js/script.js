@@ -1,31 +1,153 @@
 // Let's start with Nairobi cause... why not?
 let lat = -1.292066;
 let lon = 36.821946;
-let interval = null;
 
 // Google Maps Geocoding API key
-const GeocodeAPIKey = "AIzaSyATszLTrO3Njt52156ddkyk85WcFRzgZEg";
+const GeocodeAPIKey = "AIzaSyATszLTrO3Njt52156ddkyk85WcFRzgZEg"; // will use this later...
 const TimeZoneAPIKey = "AIzaSyB80idMRjgP_qHfbqMZaYOuJSnGwME5LSY";
 const DaysOfWeek = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat", "Sun"];
 
 // json vars
-let windDegree = 0;
+let windDegree = 0; // default val in case it isn't returned in json
+let interval = null; // used to stop setInterval in whatTimeIsIt function so we can set a new time  
 
+// locations for each of the buttons
 var locations = {
     nairobi: { lat: -1.292066, lon: 36.821946 },
     frankfurt: { lat: 50.110922, lon: 8.682127 },
     lagos: { lat: 6.524379, lon: 3.379206 },
-    cape_code: { lat: 41.668948, lon: -70.293295 },
-    // paris: { lat: 48.858370, lon: 2.294481 }, // Tour Eiffel
-    paris: { lat: 48.858547, lon: 2.294449 },
-    // paris: { lat: 48.856614, lon: 2.352222 }, // Paris
+    cape_code: { lat: 41.668948, lon: -70.293295 }, // Hyannis
+    paris: { lat: 48.858547, lon: 2.294449 }, // Tour Eiffel
+    // paris: { lat: 48.856614, lon: 2.352222 }, // Paris proper
     // paris: { lat: 48.873792, lon: 2.295028 }, // Arc de Triomphe
     // london: { lat: 51.520093, lon: -0.122097 }, // London's West End
     london: { lat: 51.513676, lon: -0.126710 }, // London's theatre district
-    home: { lat: 34.215382, lon: -118.198857 },
-    los_angeles: { lat: 34.052234, lon: -118.243685 }
+    los_angeles: { lat: 34.052234, lon: -118.243685 } // my hood
 };
 
+// allows us to change background images
+var bgImages = ["clear-d.jpeg", "clear-n.jpg", "clouds-n.jpeg", "cloudy-sky.jpg", "clouds-pink.jpeg", "drizzle-d.jpg", "fog.jpg", "haze-d.jpg", "haze-n.jpeg", "purple-tree.jpg", "rain-d.jpeg", "rain-thunder.jpg", "snow-d.jpeg", "snow-n.jpeg", "wind-d.jpg", "wind-n.jpeg"];
+
+// lets get started!
+function init() {
+    // setup button clicks
+    $("#use-my-location").on("click", getGeolocation);
+
+    // city buttons
+    document.getElementById("btn-Nairobi").addEventListener("click", function () { getWeather(locations.nairobi.lat, locations.nairobi.lon); });
+    document.getElementById("btn-Frankfurt").addEventListener("click", function () { getWeather(locations.frankfurt.lat, locations.frankfurt.lon); });
+    document.getElementById("btn-Lagos").addEventListener("click", function () { getWeather(locations.lagos.lat, locations.lagos.lon); });
+    document.getElementById("btn-Cape-Cod").addEventListener("click", function () { getWeather(locations.cape_code.lat, locations.cape_code.lon); });
+    document.getElementById("btn-London").addEventListener("click", function () { getWeather(locations.london.lat, locations.london.lon); });
+    document.getElementById("btn-Paris").addEventListener("click", function () { getWeather(locations.paris.lat, locations.paris.lon); });
+    document.getElementById("btn-Los-Angeles").addEventListener("click", function () { getWeather(locations.los_angeles.lat, locations.los_angeles.lon); });
+
+    // loop through bgImages array & create an event handler for each bgImage button
+    // need to use 'let' in for..loop for block level scope: https://stackoverflow.com/questions/750486/javascript-closure-inside-loops-simple-practical-example
+    for (let i = 0; i < bgImages.length; i++) {
+        var btn = document.getElementById("bgImage-btn" + i);
+        btn.title = bgImages[i]; // set tooltip with image name
+
+        btn.addEventListener("click", function () {
+            updateBackgroundImage(bgImages[i]);
+        });
+    }
+
+    // debug panel
+    $("#debug-btn").click(function () {
+        $("#debug-container").transition("slide up");
+    });
+
+    // do the magic
+    getWeather(lat, lon);
+}
+
+// where am I?
+function getGeolocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            lat = position.coords.latitude;
+            lon = position.coords.longitude;
+            console.log("lon:", lon, "lat", lat);
+            getWeather(lat, lon);
+        });
+    }
+}
+
+// ajax call using jquery (we use straight javascript ajax further down)
+function getWeather(lat1, lon1) {
+    lat = lat1;
+    lon = lon1;
+    $.ajax({
+        url: "https://fcc-weather-api.glitch.me/api/current",
+        dataType: "jsonp",
+        data: {
+            lat: lat,
+            lon: lon,
+            units: "imperial"
+        },
+        jsonpCallback: "displayWeather"
+    });
+}
+
+// throw it up on the page
+function displayWeather(json) {
+    console.log(json);
+
+    windDegree = json.wind.deg || 0; // fix in case json.wind.deg is null or undefined
+
+    // fill page with the data (using vanilla js here)
+    document.getElementById("city").innerHTML = json.name;
+    document.getElementById("temp").innerHTML = convertCtoF(json.main.temp);
+    document.getElementById("icon").src = json.weather[0].icon;
+    document.getElementById("high").innerHTML = convertCtoF(json.main.temp_max) + "&deg;";
+    document.getElementById("low").innerHTML = convertCtoF(json.main.temp_min) + "&deg;";
+    document.getElementById("sky").innerHTML = json.weather[0].description.charAt(0).toUpperCase() + json.weather[0].description.slice(1);
+    document.getElementById("humidity").innerHTML = json.main.humidity + "%";
+    document.getElementById("wind-dir").innerHTML = windDirection(json.wind.deg);
+    document.getElementById("wind-speed").innerHTML = convertWindToMiles(json.wind.speed);
+    document.getElementById("sunrise").innerHTML = new Date(Number(json.sys.sunrise + "000")).toLocaleTimeString();
+    document.getElementById("sunset").innerHTML = new Date(Number(json.sys.sunset + "000")).toLocaleTimeString();
+    document.getElementById("compass-deg").innerHTML = windDegree.toFixed(2) + "&deg;";
+    document.getElementById("conditionCode").innerHTML = json.weather[0].id;
+    document.getElementById("lat").innerHTML = lat; // json.coord.lat is truncated to 2 decimal places - don't use
+    document.getElementById("lon").innerHTML = lon; // json.coord.lon is truncated to 2 decimal places - don't use
+    document.getElementById("vis").innerHTML = convertVisToMiles(json.visibility);
+        
+    // point me in the right direction
+    setCompass(windDegree);
+    console.log(json.wind.deg);
+    console.log(windDegree);
+
+    // set background image based on weather condition
+    // FIX: This is now moved to whatTimeIsIt() function so it can be based on time of day also
+    // doWeatherCondition(json.weather[0].id, timeOfDay);
+
+    // show me local time & set background image
+    whatTimeIsIt(lat, lon, "localTime", json.weather[0].id);
+
+    //  build debug panel
+    buildDebugPanel(json);
+}
+
+// make the magic with css transform, rotate, & degree - this is cool
+function setCompass(degree) {
+    setTimeout(function () {
+        $(".arrow").css("transform", "rotate(" + degree + "deg)");
+    }, 1000);
+
+    //$(".arrow:hover").css("transform", "rotate(225deg)")
+    // var prev = $(".arrow").css("transform");
+    $(".arrow").hover(function () {
+        $(".arrow").css("transform", "rotate(0deg)");
+        // console.log("hover in");
+    }, function () {
+        $(".arrow").css("transform", "rotate(" + degree + "deg");
+        // console.log("hover out");
+    });
+}
+
+// Display localized time for a chosen city
 function whatTimeIsIt(lat, lon, tagId, conditionCode) {
     console.log("lat:", lat);
     console.log("lon:", lon);
@@ -58,7 +180,7 @@ function whatTimeIsIt(lat, lon, tagId, conditionCode) {
                     localDate.setSeconds(localDate.getSeconds() + 1);
                     container.innerHTML = localDate.toLocaleTimeString() + " (" + DaysOfWeek[localDate.getDay()] + ")";
                 }, 1000);
-                // call set background
+
                 // set background image based on weather condition
                 var timeOfDay = "d";
                 if (localDate.getHours() < 7 || localDate.getHours() > 17) {
@@ -75,157 +197,6 @@ function whatTimeIsIt(lat, lon, tagId, conditionCode) {
         }
     };
     xhr.send(); // send request
-}
-
-function init() {
-    // setup button clicks
-
-    $("#use-my-location").on("click", getGeolocation);
-
-    document.getElementById("btn-Nairobi").addEventListener("click", function () { getWeather(locations.nairobi.lat, locations.nairobi.lon); });
-    document.getElementById("btn-Frankfurt").addEventListener("click", function () { getWeather(locations.frankfurt.lat, locations.frankfurt.lon); });
-    document.getElementById("btn-Lagos").addEventListener("click", function () { getWeather(locations.lagos.lat, locations.lagos.lon); });
-    document.getElementById("btn-Cape-Cod").addEventListener("click", function () { getWeather(locations.cape_code.lat, locations.cape_code.lon); });
-    document.getElementById("btn-Paris").addEventListener("click", function () { getWeather(locations.paris.lat, locations.paris.lon); });
-    document.getElementById("btn-London").addEventListener("click", function () { getWeather(locations.london.lat, locations.london.lon); });
-    document.getElementById("btn-Los-Angeles").addEventListener("click", function () { getWeather(locations.los_angeles.lat, locations.los_angeles.lon); });
-
-    $("#debug-btn").click(function () {
-        $("#debug-container").transition("slide up");
-    });
-
-    // do the magic
-    getWeather(lat, lon);
-}
-
-
-function getGeolocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            lat = position.coords.latitude;
-            lon = position.coords.longitude;
-            console.log("lon:", lon, "lat", lat);
-            getWeather(lat, lon);
-        });
-    }
-}
-
-function getWeather(lat1, lon1) {
-    lat = lat1;
-    lon = lon1;
-    $.ajax({
-        url: "https://fcc-weather-api.glitch.me/api/current",
-        dataType: "jsonp",
-        data: {
-            lat: lat,
-            lon: lon,
-            units: "imperial"
-        },
-        jsonpCallback: "displayWeather"
-    });
-}
-
-function displayWeather(json) {
-    console.log(json);
-
-    windDegree = json.wind.deg || 0;
-
-
-    // fill page with the data using vanilla js
-    document.getElementById("city").innerHTML = json.name;
-    document.getElementById("temp").innerHTML = convertCtoF(json.main.temp);
-    document.getElementById("icon").src = json.weather[0].icon;
-    document.getElementById("high").innerHTML = convertCtoF(json.main.temp_max) + "&deg;";
-    document.getElementById("low").innerHTML = convertCtoF(json.main.temp_min) + "&deg;";
-    // document.getElementById("sky").innerHTML = json.weather[0].main + "(" + json.weather[0].description + ")";
-    document.getElementById("sky").innerHTML = json.weather[0].description.charAt(0).toUpperCase() + json.weather[0].description.slice(1);
-    document.getElementById("humidity").innerHTML = json.main.humidity + "%";
-    document.getElementById("wind-dir").innerHTML = windDirection(json.wind.deg);
-    document.getElementById("wind-speed").innerHTML = convertWindToMiles(json.wind.speed);
-    document.getElementById("sunrise").innerHTML = new Date(Number(json.sys.sunrise + "000")).toLocaleTimeString();
-    document.getElementById("sunset").innerHTML = new Date(Number(json.sys.sunset + "000")).toLocaleTimeString();
-    document.getElementById("compass-deg").innerHTML = windDegree.toFixed(2) + "&deg;";
-    document.getElementById("conditionCode").innerHTML = json.weather[0].id;
-    document.getElementById("lat").innerHTML = lat; // json.coord.lat is truncated
-    document.getElementById("lon").innerHTML = lon; // json.coord.lon;
-    document.getElementById("vis").innerHTML = convertVisToMiles(json.visibility);
-        
-    // point me in the right direction
-    setCompass(windDegree);
-    console.log(json.wind.deg);
-    console.log(windDegree);
-
-    // show me local time
-    whatTimeIsIt(lat, lon, "localTime", json.weather[0].id);
-
-    // set background image based on weather condition
-    // doWeatherCondition(json.weather[0].id, timeOfDay);
-
-    //  build debug panel
-    buildDebugPanel(json);
-}
-
-function setCompass(degree) {
-    setTimeout(function () {
-        $(".arrow").css("transform", "rotate(" + degree + "deg)");
-    }, 1000);
-
-    //$(".arrow:hover").css("transform", "rotate(225deg)")
-    // var prev = $(".arrow").css("transform");
-    $(".arrow").hover(function () {
-        $(".arrow").css("transform", "rotate(0deg)");
-        // console.log("hover in");
-    }, function () {
-        $(".arrow").css("transform", "rotate(" + degree + "deg");
-        // console.log("hover out");
-    });
-}
-
-// jQuery object loop
-function jsonFieldsLoop(json, htmlStr) {
-
-    // Loop done with jQuery
-    $.each(json, function (k, v) {
-        if (typeof v === "object") {
-            htmlStr += k + "<br />";
-            htmlStr = jsonFieldsLoop(v, htmlStr);
-        } else {
-            htmlStr += k + ": " + v + "<br />";
-        }
-    });
-
-    return htmlStr;
-}
-
-// Vanilla JS object loop
-function traverse(obj, htmlStr) {
-    htmlStr += "<ul>";
-
-    // Loop done with for..in which needs hasOwnProperty check
-    for (var property in obj) {
-        if (obj.hasOwnProperty(property)) {
-            if (!!obj[property] && typeof (obj[property]) === "object") {
-                htmlStr += "<li><b>" + property + "</b>";
-                htmlStr = traverse(obj[property], htmlStr);
-                htmlStr += "</li>";
-            } else {
-                switch (property) {
-                    case "sunrise":
-                    case "sunset":
-                        obj[property] = new Date(Number(obj[property] + "000")).toLocaleTimeString();
-                        break;
-                    case "temp":
-                    case "temp_min":
-                    case "temp_max":
-                        obj[property] = convertCtoF(obj[property]);
-                        break;
-                }
-                htmlStr += "<li>" + property + ": " + obj[property] + "</li>";
-            }
-        }
-    }
-    htmlStr += "</ul>";
-    return htmlStr;
 }
 
 function convertCtoF(cel) {
@@ -315,7 +286,7 @@ function doWeatherCondition(conditionCode, timeDay) {
     switch (true) {
         case (conditionCode < 240): //Thunderstorm
             if (timeDay === "d") {
-                bgImage = "lightening-d.jpeg";
+                bgImage = "thunder-d.jpeg";
             } else {
                 bgImage = "thunder-n.jpeg";
             }
@@ -348,7 +319,7 @@ function doWeatherCondition(conditionCode, timeDay) {
             if (timeDay === "d") {
                 bgImage = "clear-d.jpeg";
             } else {
-                bgImage = "clear-n.jpeg";
+                bgImage = "clear-n.jpg";
             }
             break;
         case (conditionCode < 805): //Clouds
@@ -372,14 +343,14 @@ function doWeatherCondition(conditionCode, timeDay) {
             bgImage = "";    
     }
     // bgImage = "cloudy-sky.jpg";
-    // document.body.style.backgroundImage = "url('../images/" + bgImage + "');";
-    // console.log($("body").css("background", "#ccc url('../images/purple-tree.jpg') no-repeat fixed center center cover;"));
-    //$("body").css("background-image", "url('../images/purple-tree.jpg')");
-
-    // console.log($("body").css("background-image", "url('../images/" + bgImage + "')"));
-    $("body").css("background-image", "url('../images/" + bgImage + "')");
+    updateBackgroundImage(bgImage);
 }
 
+function updateBackgroundImage(img) {
+    $("body").css("background-image", "url('../images/" + img + "')");
+}
+
+// Debug panel, object interation, & raw json output
 function buildDebugPanel(json) {
     var html = "";
 
@@ -431,4 +402,51 @@ function buildDebugPanel(json) {
     $("#json-fields-loop").html(jsonFieldsLoop(json, ""));
 
     $("#output").html(JSON.stringify(json));
+}
+
+// jQuery object loop
+function jsonFieldsLoop(json, htmlStr) {
+    
+    // Loop done with jQuery
+    $.each(json, function (k, v) {
+        if (typeof v === "object") {
+            htmlStr += k + "<br />";
+            htmlStr = jsonFieldsLoop(v, htmlStr);
+        } else {
+            htmlStr += k + ": " + v + "<br />";
+        }
+    });
+
+    return htmlStr;
+}
+
+// Vanilla JS object loop
+function traverse(obj, htmlStr) {
+    htmlStr += "<ul>";
+
+    // Loop done with for..in which needs hasOwnProperty check
+    for (var property in obj) {
+        if (obj.hasOwnProperty(property)) {
+            if (!!obj[property] && typeof (obj[property]) === "object") {
+                htmlStr += "<li><b>" + property + "</b>";
+                htmlStr = traverse(obj[property], htmlStr);
+                htmlStr += "</li>";
+            } else {
+                switch (property) {
+                    case "sunrise":
+                    case "sunset":
+                        obj[property] = new Date(Number(obj[property] + "000")).toLocaleTimeString();
+                        break;
+                    case "temp":
+                    case "temp_min":
+                    case "temp_max":
+                        obj[property] = convertCtoF(obj[property]);
+                        break;
+                }
+                htmlStr += "<li>" + property + ": " + obj[property] + "</li>";
+            }
+        }
+    }
+    htmlStr += "</ul>";
+    return htmlStr;
 }

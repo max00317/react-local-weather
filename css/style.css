@@ -6,7 +6,7 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
 }
-#header { display: inline-block; }
+/* #header { display: inline-block; } */
 
 .ui.masthead.segment { 
     min-height: 50vh;
@@ -30,6 +30,8 @@ body {
     right: 10px;
 }
 
+.ui.grid { margin-top: 0; }
+.ui.grid > .column:not(.row) { padding-top: 0; }
 
 /* Compass */
 #compass-label { margin: 0;}
@@ -62,7 +64,7 @@ body {
     transform: rotate(225deg);
     transition: transform 0.7s ease-in-out;
 }
-#compass-stats { padding: 1em 0.8em; }
+#compass-stats { padding: 1em 0.6em; }
 #temp-group{ margin-top: 20px; border:1px solid #666; padding-top: 6px;}
 #temp-toggle { border-left: unset; margin-right: 30px;}
 #temp-toggle .button:first-child { border-left: 1px solid #666; border-top-left-radius: .28571429rem; border-bottom-left-radius:  .28571429rem;}
@@ -141,4 +143,7 @@ body {
 #debug-content { height:380px;}
 #traverse-json, #json-fields-loop {
     overflow-y: scroll;
+}
+.ui.popup.wide.center.transition {
+    width: 340px;
 }

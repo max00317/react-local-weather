@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- <link href='https://fonts.googleapis.com/css?family=Yellowtail' rel='stylesheet'> -->
     <!-- <link href='https://fonts.googleapis.com/css?family=Italianno' rel='stylesheet'> -->
-    <link rel="stylesheet" type="text/css" href="semantic/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="semantic/semantic.css">
     <link href="css/style.css" rel="stylesheet">
 </head>
 
@@ -20,10 +20,8 @@
                 <h1 id="header">Local Weather App</h1>
                 <i id="debug-btn" class="link bordered setting icon" ></i>
                 <!-- data-tooltip="Show/Hide Console" data-variation="inverted" -->
-                <p>
-                    <div>Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
-                </p>
-
+                
+                <p><i>Click "Use my location" or check out some of the cities I have Twitter friends in.</i></p>
                 
                 <div class="ui buttons tiny" id="temp-toggle">
                     <button class="ui button">C</button>
@@ -32,7 +30,7 @@
                 </div>
                 <button class="ui button positive tiny" id="use-my-location">Use my location</button>
 
-                <div class="ui grid">
+                <div class="ui grid row" id="row">
                     <div class="four wide column">
                         <div class="compass">
                             <div id="compass-label">Wind Direction</div>
@@ -54,13 +52,28 @@
                             </div>
                             <div id="localTime">&nbsp;</div>
                             <div class="ui huge header" id="temp"></div>
-                            <div id="high-low"><span id="high" class="ui red label"></span> <span id="low" class="ui blue label"></span></div>
+                            <div id="high-low"><span id="high" class="ui red label" data-tooltip="Today's High"></span> <span id="low" class="ui blue label" data-tooltip="Today's Low"></span></div>
                             <div><span id="sky"></span> with <span id="humidity"></span> humidity</div>
                             <div>Wind: <span id="wind-dir"></span> at <span id="wind-speed"></span></div>
                             <div>Visibility: <span id="vis"></span></div>
                             <div class="hidden">Sunrise: <span id="sunrise"></span> - Sunset: <span id="sunset"></span></div>
-                            
                         </div>
+                        <a class="ui red empty circular label" id="bgImage-btn0"></a>
+                        <a class="ui orange empty circular label" id="bgImage-btn1"></a>
+                        <a class="ui yellow empty circular label" id="bgImage-btn2"></a>
+                        <a class="ui olive empty circular label" id="bgImage-btn3"></a>
+                        <a class="ui green empty circular label" id="bgImage-btn4"></a>
+                        <a class="ui teal empty circular label" id="bgImage-btn5"></a>
+                        <a class="ui blue empty circular label" id="bgImage-btn6"></a>
+                        <a class="ui violet empty circular label" id="bgImage-btn7"></a>
+                        <a class="ui purple empty circular label" id="bgImage-btn8"></a>
+                        <a class="ui pink empty circular label" id="bgImage-btn9"></a>
+                        <a class="ui brown empty circular label" id="bgImage-btn10"></a>
+                        <a class="ui grey empty circular label" id="bgImage-btn11"></a>
+                        <a class="ui black empty circular label" id="bgImage-btn12"></a>
+                        <a class="ui red empty circular label" id="bgImage-btn13"></a>
+                        <a class="ui orange empty circular label" id="bgImage-btn14"></a>
+                        <a class="ui yellow empty circular label" id="bgImage-btn15"></a>
                     </div>
                     <div class="four wide column" id="city-buttons">
                         <button class="ui button" id="btn-Nairobi" data-tooltip="This is for my friend in Kenya who's gonna run her own game dev company one day!" data-position="left center">Nairobi</button>
@@ -69,17 +82,16 @@
 
                         <button class="ui button" id="btn-Lagos" data-tooltip="This is for my friend in Nigeria who likes Simi and the finer things in life! :)" data-position="left center">Lagos</button>
 
-                        <button class="ui button" id="btn-Cape-Cod" data-tooltip="This is for my fellow countryman on the other coast who always has words of encouragement for everyone!" data-position="left center">Cape Cod</button>
+                        <button class="ui button" id="btn-Cape-Cod" data-tooltip="This is for my friend on the east coast who always has encouragement for everyone!" data-position="left center">Cape Cod</button>
 
-                        <button class="ui button" id="btn-Paris" data-tooltip="This is for Thea & Meikei. I don't know where you live but Paris can be where you two soul mates meet for coffee one day. :)" data-position="left center" data-variation="inverted">Paris</button>
+                        <button class="ui button" id="btn-London" data-tooltip="This is for my friend in London who is a star of the stage and computer screen! :)" data-position="left center" data-variation="inverted">London</button>
 
-                        <button class="ui button" id="btn-London" data-tooltip="This is for my friend in London who is a star of the stage and screen (computer screen). :)" data-position="left center" data-variation="inverted">London</button>
+                        <button class="ui button" id="btn-Paris">Paris</button>
 
-                        <button class="ui button" id="btn-Los-Angeles" data-tooltip="This is the weather in my part of the world. Good for my hikes & runs." data-position="left center" data-variation="inverted">Los Angeles</button>
+                        <button class="ui button" id="btn-Los-Angeles" data-tooltip="This is for me so I can see what the weather's like before a run or hike. ;)" data-position="left center" data-variation="inverted">Los Angeles</button>
                     </div>
                 </div>
 
-                <!-- <p>something else</p> -->
             </div> 
         </section>
 
@@ -124,9 +136,20 @@
     <script src="js/script.js"></script>
     <script>
         $(document).ready(function () {
-            init();
-            $('.menu .item').tab();
-            $('.activating.element').popup();
+            
+            $('.menu .item').tab(); // create the tabs
+
+            // one message too long to embed
+            $("#btn-Paris").popup({
+                title: "For my Ryan Reynolds fan club friends",
+                content: "I don't know where you two live but Paris would be a great place for you two soul mates😝 to meet for coffee one day.😁",
+                variation: "wide",
+                position: "left center",
+                inline: "true"
+            });
+
+            init(); // let's start the show!
+            
         });
     </script>
 </body>
