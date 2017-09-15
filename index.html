@@ -24,13 +24,13 @@
                 <p><i>Click "Use my location" or check out some of the cities I have Twitter friends in.</i></p>
                 
                 <div class="ui buttons tiny" id="temp-toggle">
-                    <button class="ui button">C</button>
+                    <button class="ui button cf-toggle" id="metric">C</button>
                     <div class="or"></div>
-                    <button class="ui button active positive">F</button>
+                    <button class="ui button cf-toggle active positive" id="imperial">F</button>
                 </div>
                 <button class="ui button positive tiny" id="use-my-location">Use my location</button>
 
-                <div class="ui grid row" id="row">
+                <div class="ui three column stackable grid" id="row">
                     <div class="four wide column">
                         <div class="compass">
                             <div id="compass-label">Wind Direction</div>
@@ -76,19 +76,13 @@
                         <a class="ui yellow empty circular label" id="bgImage-btn15"></a>
                     </div>
                     <div class="four wide column" id="city-buttons">
-                        <button class="ui button" id="btn-Nairobi" data-tooltip="This is for my friend in Kenya who's gonna run her own game dev company one day!" data-position="left center">Nairobi</button>
-
-                        <button class="ui button" id="btn-Frankfurt" data-tooltip="This is for Cuddle Bear & his owner who has mad CSS skills :)" data-position="left center">Frankfurt</button>
-
-                        <button class="ui button" id="btn-Lagos" data-tooltip="This is for my friend in Nigeria who likes Simi and the finer things in life! :)" data-position="left center">Lagos</button>
-
-                        <button class="ui button" id="btn-Cape-Cod" data-tooltip="This is for my friend on the east coast who always has encouragement for everyone!" data-position="left center">Cape Cod</button>
-
-                        <button class="ui button" id="btn-London" data-tooltip="This is for my friend in London who is a star of the stage and computer screen! :)" data-position="left center" data-variation="inverted">London</button>
-
+                        <button class="ui button" id="btn-Nairobi">Nairobi</button>
+                        <button class="ui button" id="btn-Frankfurt">Frankfurt</button>
+                        <button class="ui button" id="btn-Lagos">Lagos</button>
+                        <button class="ui button" id="btn-Cape-Cod">Cape Cod</button>
+                        <button class="ui button" id="btn-London">London</button>
                         <button class="ui button" id="btn-Paris">Paris</button>
-
-                        <button class="ui button" id="btn-Los-Angeles" data-tooltip="This is for me so I can see what the weather's like before a run or hike. ;)" data-position="left center" data-variation="inverted">Los Angeles</button>
+                        <button class="ui button" id="btn-Los-Angeles">Los Angeles</button>
                     </div>
                 </div>
 
@@ -136,17 +130,10 @@
     <script src="js/script.js"></script>
     <script>
         $(document).ready(function () {
-            
-            $('.menu .item').tab(); // create the tabs
+            // do semantic-ui calls first before my init() function
+            $('.menu .item').tab(); // create the debug tabs,
 
-            // one message too long to embed
-            $("#btn-Paris").popup({
-                title: "For my Ryan Reynolds fan club friends",
-                content: "I don't know where you two live but Paris would be a great place for you two soul mates😝 to meet for coffee one day.😁",
-                variation: "wide",
-                position: "left center",
-                inline: "true"
-            });
+            shoutOutToMyPeeps() // set up the callouts,
 
             init(); // let's start the show!
             

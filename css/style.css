@@ -38,17 +38,10 @@ body {
 #compass-deg {margin-bottom:6px;}
 
 .compass { 
-    margin: 16px 6px; 
-    /* position:relative; */
+    margin: 16px 0; 
+    position: relative;
     width:100%; 
-    height:200px;}
-.disc {
-    position: absolute;
-    z-index: 200;
-    /* width: 160px;
-    height: 160px; */
-    width: 80%;
-    left: 12%
+    /* height:200px; */
 }
 .arrow {
     position: absolute;
@@ -57,16 +50,24 @@ body {
     height: 160px; */
     transform: rotate(0);
     transition: transform 0.5s ease-in-out;
-    width: 80%;
-    left: 12%
+    width: 100%;
+    max-width: 180px;
 }
 .arrow:hover {
     transform: rotate(225deg);
     transition: transform 0.7s ease-in-out;
 }
+.disc {
+    /* position: absolute; */
+    z-index: 200;
+    /* width: 160px;
+    height: 160px; */
+    width: 100%;
+    max-width: 180px;
+}
 #compass-stats { padding: 1em 0.6em; }
 #temp-group{ margin-top: 20px; border:1px solid #666; padding-top: 6px;}
-#temp-toggle { border-left: unset; margin-right: 30px;}
+#temp-toggle { border-left: unset;}
 #temp-toggle .button:first-child { border-left: 1px solid #666; border-top-left-radius: .28571429rem; border-bottom-left-radius:  .28571429rem;}
 
 /* weather center panel */
@@ -105,13 +106,14 @@ body {
     top: 55%;
     background-color: #f6f6f6;
 }
-.ui.button {
+.ui.button, .ui.buttons .button {
     border: 1px solid #666;
+    margin: 1px 0;
 }
 #city-buttons { margin-top: 20px; z-index: 400;}
 #city-buttons .ui.button {
     width: 120px;
-    margin: 1px 0;
+    /* margin: 1px 0; */
 }
 
 /* debug panel */

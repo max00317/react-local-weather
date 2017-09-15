@@ -8,8 +8,15 @@ const TimeZoneAPIKey = "AIzaSyB80idMRjgP_qHfbqMZaYOuJSnGwME5LSY";
 const DaysOfWeek = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat", "Sun"];
 
 // json vars
+let interval = null; // used to stop setInterval in whatTimeIsIt function so we can set a new time
+let currentUnit = "imperial"; // keep track of current unit
+
+let temp = 0;
+let high = 0;
+let low = 0;
+let windSpeed = 0;
 let windDegree = 0; // default val in case it isn't returned in json
-let interval = null; // used to stop setInterval in whatTimeIsIt function so we can set a new time  
+let vis = 0;
 
 // locations for each of the buttons
 var locations = {
@@ -30,10 +37,28 @@ var bgImages = ["clear-d.jpeg", "clear-n.jpg", "clouds-n.jpeg", "cloudy-sky.jpg"
 
 // lets get started!
 function init() {
-    // setup button clicks
+    // setup button click
+
+    // Imperial or Metric? Set click eventhandler to toggle values
+    $(".cf-toggle").on("click", function(event){
+        // console.log(event.target.id);
+        if(event.target.id != currentUnit) {
+            $(".cf-toggle").toggleClass("positive active");
+            // console.log(event.target.id);
+            if(event.target.id === "metric") {
+                toggleUnits("metric");
+                currentUnit = "metric";
+            } else {
+                toggleUnits("imperial");
+                currentUnit = "imperial";
+            }
+        }  
+    });
+
+    // Geolocate me!
     $("#use-my-location").on("click", getGeolocation);
 
-    // city buttons
+    // city buttons (lets write long form js)
     document.getElementById("btn-Nairobi").addEventListener("click", function () { getWeather(locations.nairobi.lat, locations.nairobi.lon); });
     document.getElementById("btn-Frankfurt").addEventListener("click", function () { getWeather(locations.frankfurt.lat, locations.frankfurt.lon); });
     document.getElementById("btn-Lagos").addEventListener("click", function () { getWeather(locations.lagos.lat, locations.lagos.lon); });
@@ -94,30 +119,49 @@ function getWeather(lat1, lon1) {
 function displayWeather(json) {
     console.log(json);
 
-    windDegree = json.wind.deg || 0; // fix in case json.wind.deg is null or undefined
+    console.log("global temp ",json.main.temp);
+    // assign to global vars
+    temp = json.main.temp;
+    high = json.main.temp_max;
+    low = json.main.temp_min;
+    windSpeed = json.wind.speed;
+    windDegree = json.wind.deg || 0; // in case json.wind.deg is null or undefined
+    vis = json.visibility || 0;
+
+    console.log("vis",vis);
+
+    // if(currentUnit === "imperial") {
+    //     document.getElementById("temp").innerHTML = convertCtoF(temp);
+    //     document.getElementById("high").innerHTML = convertCtoF(high) + "&deg;";
+    //     document.getElementById("low").innerHTML = convertCtoF(low) + "&deg;";
+    //     document.getElementById("wind-speed").innerHTML = convertWindToMiles(windSpeed);
+    //     document.getElementById("vis").innerHTML = convertVisToMiles(vis);
+    // } else if (currentUnit === "metric") {
+    //     document.getElementById("temp").innerHTML = temp;
+    //     document.getElementById("high").innerHTML = high + "&deg;";
+    //     document.getElementById("low").innerHTML = low + "&deg;";
+    //     document.getElementById("wind-speed").innerHTML = windSpeed & " m/s";
+    //     document.getElementById("vis").innerHTML = vis & " m";
+    // }
+    toggleUnits(currentUnit);
 
     // fill page with the data (using vanilla js here)
     document.getElementById("city").innerHTML = json.name;
-    document.getElementById("temp").innerHTML = convertCtoF(json.main.temp);
-    document.getElementById("icon").src = json.weather[0].icon;
-    document.getElementById("high").innerHTML = convertCtoF(json.main.temp_max) + "&deg;";
-    document.getElementById("low").innerHTML = convertCtoF(json.main.temp_min) + "&deg;";
+    document.getElementById("icon").src = json.weather[0].icon || "";
     document.getElementById("sky").innerHTML = json.weather[0].description.charAt(0).toUpperCase() + json.weather[0].description.slice(1);
     document.getElementById("humidity").innerHTML = json.main.humidity + "%";
-    document.getElementById("wind-dir").innerHTML = windDirection(json.wind.deg);
-    document.getElementById("wind-speed").innerHTML = convertWindToMiles(json.wind.speed);
+    document.getElementById("wind-dir").innerHTML = windDirection(windDegree);
     document.getElementById("sunrise").innerHTML = new Date(Number(json.sys.sunrise + "000")).toLocaleTimeString();
     document.getElementById("sunset").innerHTML = new Date(Number(json.sys.sunset + "000")).toLocaleTimeString();
     document.getElementById("compass-deg").innerHTML = windDegree.toFixed(2) + "&deg;";
     document.getElementById("conditionCode").innerHTML = json.weather[0].id;
     document.getElementById("lat").innerHTML = lat; // json.coord.lat is truncated to 2 decimal places - don't use
     document.getElementById("lon").innerHTML = lon; // json.coord.lon is truncated to 2 decimal places - don't use
-    document.getElementById("vis").innerHTML = convertVisToMiles(json.visibility);
-        
+    
     // point me in the right direction
     setCompass(windDegree);
-    console.log(json.wind.deg);
-    console.log(windDegree);
+    // console.log(json.wind.deg);
+    // console.log(windDegree);
 
     // set background image based on weather condition
     // FIX: This is now moved to whatTimeIsIt() function so it can be based on time of day also
@@ -149,8 +193,8 @@ function setCompass(degree) {
 
 // Display localized time for a chosen city
 function whatTimeIsIt(lat, lon, tagId, conditionCode) {
-    console.log("lat:", lat);
-    console.log("lon:", lon);
+    // console.log("lat:", lat);
+    // console.log("lon:", lon);
     // http://www.javascriptkit.com/dhtmltutors/local-time-google-time-zone-api.shtml
     // http://www.javascriptkit.com/dhtmltutors/live-local-time-google-time-zone-api.shtml
 
@@ -171,7 +215,7 @@ function whatTimeIsIt(lat, lon, tagId, conditionCode) {
             if (output.status === "OK") { // if API reports everything was returned successfully
                 var offsets = output.dstOffset * 1000 + output.rawOffset * 1000; // get DST and time zone offsets in milliseconds
                 var localDate = new Date(timestamp * 1000 + offsets); // Date object containing current time of Tokyo (timestamp + dstOffset + rawOffset)
-                console.log("in: ", localDate.toLocaleString()); // Display current Tokyo date and time
+                // console.log("in: ", localDate.toLocaleString()); // Display current Tokyo date and time
 
                 var refreshDate = new Date(); // get current date again to calculate time elapsed between targetDate and now
                 var millisecondsElapsed = refreshDate - targetDate; // get amount of time elapsed between targetDate and now
@@ -199,28 +243,36 @@ function whatTimeIsIt(lat, lon, tagId, conditionCode) {
     xhr.send(); // send request
 }
 
-function convertCtoF(cel) {
-    return Math.floor(cel * 1.8 + 32);
+// functions to toggle between Celcius & Fahrenheit
+function toggleUnits(unit) {
+    if(unit === "imperial") {
+        console.log("imperial", convertCtoF(temp));
+        document.getElementById("temp").innerHTML = convertCtoF(temp);
+        document.getElementById("high").innerHTML = convertCtoF(high) + "&deg;";
+        document.getElementById("low").innerHTML = convertCtoF(low) + "&deg;";
+        document.getElementById("wind-speed").innerHTML = convertWindToMiles(windSpeed);
+        document.getElementById("vis").innerHTML = convertVisToMiles(vis);
+    } else if (unit === "metric") {
+        console.log("metric", temp);
+        console.log("vis",vis);
+        document.getElementById("temp").innerHTML = temp;
+        document.getElementById("high").innerHTML = high + "&deg;";
+        document.getElementById("low").innerHTML = low + "&deg;";
+        document.getElementById("wind-speed").innerHTML = windSpeed + " m/s";
+        document.getElementById("vis").innerHTML = vis.toLocaleString() + " m";
+    }
 }
 
-function convertFtoC(far) {
-    return Math.floor((far - 32) / 1.8);
+function convertCtoF(cel) {
+    return Math.floor(cel * 1.8 + 32);
 }
 
 function convertVisToMiles(meters) {
     return (meters / 1609.344).toFixed(2) + " mi";
 }
 
-function convertVisToMeters(miles) {
-    return (miles * 1609.344).round() + " Meters";
-}
-
 function convertWindToMiles(meters) {
     return (meters * 2.2369).toFixed(2) + " mph";
-}
-
-function convertWindToMeters(miles) {
-    return (miles * 0.44704).toFixed(2) + " m/s";
 }
 
 function windDirection(degree) {
@@ -449,4 +501,57 @@ function traverse(obj, htmlStr) {
     }
     htmlStr += "</ul>";
     return htmlStr;
+}
+
+// res ipsa ...
+function shoutOutToMyPeeps() {
+    $("#btn-Nairobi").popup({
+        title: "Go Hufflepuff!ツ",
+        content: "This is for my friend in Kenya who's gonna run her own game dev company one day!👍😁",
+        variation: "wide",
+        position: "left center",
+        inline: "true"
+    });
+    $("#btn-Frankfurt").popup({
+        title: "She make the best Bear on a Waffle!",
+        content: "This is really for my favorite cat Cuddle Bear, but his owner (who has mad CSS skills) is pretty cool too. She can also use it to check the weather.😂😁",
+        variation: "wide",
+        position: "left center",
+        inline: "true"
+    });
+    $("#btn-Lagos").popup({
+        // title: "Representing Africa's West Side",
+        html: "<div class='header'>Representing Africa's West Side</div><div class='content'>This is for my friend in Nigeria who likes 🔥Simi🔥 and the finer things in life! 💍💎🍷😎<br /><br/ >('Original Baby', 'One Kain', 'Smile For Me', 'Love Don't Care', & 'Jamb Question' all get 👍👍👍)</div>",
+        variation: "wide",
+        position: "left center",
+        inline: "true"
+    });
+    $("#btn-Cape-Cod").popup({
+        title: "Living the dream!",
+        content: "This is for my Twitter friend and fellow countryman on the East Coast who always has words of encourangement and support for his fellow coders.👏🙏🙆👌",
+        variation: "wide",
+        position: "left center",
+        inline: "true"
+    });
+    $("#btn-London").popup({
+        // title: "And the award goes to...🏆👏😎",
+        html: "<div class='header'>And the award goes to...🏆👏😎</div><div class='content'>This is for my friend in London💂 who's a star of the stage🎭🎶 and computer screen!💻😁<br />I refer to her arrow functions regularly.👍😃</div>",
+        variation: "wide",
+        position: "left center",
+        inline: "true"
+    });
+    $("#btn-Paris").popup({
+        title: "For my Ryan Reynolds Fan Club™ friends",
+        content: "I don't know where you two live but I think Paris is the perfect place for soul mates to meet for coffee.😝😁",
+        variation: "wide",
+        position: "left center",
+        inline: "true"
+    });
+    $("#btn-Los-Angeles").popup({
+        title: "🙋✌ My Hood. 😎😜",
+        content: "This is for me so I can see what the ⛅weather's like before a run 🎽🏃or hike🎒👟.",
+        variation: "wide",
+        position: "left center",
+        inline: "true"
+    });
 }
