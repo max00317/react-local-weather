@@ -37,7 +37,7 @@ var bgImages = ["clear-d.jpeg", "clear-n.jpg", "clouds-n.jpeg", "cloudy-sky.jpg"
 
 // lets get started!
 function init() {
-    // setup button click
+    // setup button click event handlers
 
     // Imperial or Metric? Set click eventhandler to toggle values
     $(".cf-toggle").on("click", function(event){
@@ -101,6 +101,7 @@ function getGeolocation() {
 
 // ajax call using jquery (we use straight javascript ajax further down)
 function getWeather(lat1, lon1) {
+
     lat = lat1;
     lon = lon1;
     $.ajax({
@@ -326,7 +327,7 @@ function doWeatherCondition(conditionCode, timeDay) {
             if (timeDay === "d") {
                 bgImage = "thunder-d.jpeg";
             } else {
-                bgImage = "thunder-n.jpeg";
+                bgImage = "thunder-n.jpg";
             }
             break;
         case (conditionCode < 330):  //Drizzle
@@ -348,9 +349,9 @@ function doWeatherCondition(conditionCode, timeDay) {
             break;
         case (conditionCode < 790): //Atmospheric - haze, fog, mist
             if (timeDay === "d") {
-                bgImage = "haze-d.jpg";
+                bgImage = "fog.jpg";
             } else {
-                bgImage = "haze-n.jpeg";
+                bgImage = "haze-d.jpg";
             }
             break;
         case (conditionCode === 800): //Clear
@@ -526,7 +527,7 @@ function shoutOutToMyPeeps() {
     });
     $("#btn-Paris").popup({
         title: "For my Ryan Reynolds😍 Fan Club™ friends..",
-        content: "I don't know where you two live but I think Paris is the perfect place for soul mates to meet for coffee.😝😁",
+        html: "<div class='header'>For my Ryan Reynolds😍 Fan Club™ friends..</div><div class='content'>I don't know where you two live* but I think Paris is the perfect place for soul mates to meet for coffee.😝😁<br><br>* Laniakea... Really? the Local Supercluster home to our Milky Way Galaxy?... Doesn't really narrow it down, does it... and what is this place called 'Germany' for that matter?😏😜",
         variation: "wide",
         position: "left center",
         inline: "true"
