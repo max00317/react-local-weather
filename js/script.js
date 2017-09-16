@@ -1,6 +1,6 @@
-// Let's start with Nairobi cause... why not?
-let lat = -1.292066;
-let lon = 36.821946;
+// Let's start with LA cause... why not?
+let lat = 34.052234;
+let lon = -118.243685;
 
 // Google Maps Geocoding API key
 const GeocodeAPIKey = "AIzaSyATszLTrO3Njt52156ddkyk85WcFRzgZEg"; // will use this later...
@@ -118,8 +118,8 @@ function getWeather(lat1, lon1) {
 // throw it up on the page
 function displayWeather(json) {
     console.log(json);
-
     console.log("global temp ",json.main.temp);
+
     // assign to global vars
     temp = json.main.temp;
     high = json.main.temp_max;
@@ -128,24 +128,10 @@ function displayWeather(json) {
     windDegree = json.wind.deg || 0; // in case json.wind.deg is null or undefined
     vis = json.visibility || 0;
 
-    console.log("vis",vis);
-
-    // if(currentUnit === "imperial") {
-    //     document.getElementById("temp").innerHTML = convertCtoF(temp);
-    //     document.getElementById("high").innerHTML = convertCtoF(high) + "&deg;";
-    //     document.getElementById("low").innerHTML = convertCtoF(low) + "&deg;";
-    //     document.getElementById("wind-speed").innerHTML = convertWindToMiles(windSpeed);
-    //     document.getElementById("vis").innerHTML = convertVisToMiles(vis);
-    // } else if (currentUnit === "metric") {
-    //     document.getElementById("temp").innerHTML = temp;
-    //     document.getElementById("high").innerHTML = high + "&deg;";
-    //     document.getElementById("low").innerHTML = low + "&deg;";
-    //     document.getElementById("wind-speed").innerHTML = windSpeed & " m/s";
-    //     document.getElementById("vis").innerHTML = vis & " m";
-    // }
+    // output temp & distance items in metric or imperial units
     toggleUnits(currentUnit);
 
-    // fill page with the data (using vanilla js here)
+    // fill page with the remaining data (using vanilla js here)
     document.getElementById("city").innerHTML = json.name;
     document.getElementById("icon").src = json.weather[0].icon || "";
     document.getElementById("sky").innerHTML = json.weather[0].description.charAt(0).toUpperCase() + json.weather[0].description.slice(1);
@@ -214,8 +200,8 @@ function whatTimeIsIt(lat, lon, tagId, conditionCode) {
             // console.log(output.status); // log API return status for debugging purposes
             if (output.status === "OK") { // if API reports everything was returned successfully
                 var offsets = output.dstOffset * 1000 + output.rawOffset * 1000; // get DST and time zone offsets in milliseconds
-                var localDate = new Date(timestamp * 1000 + offsets); // Date object containing current time of Tokyo (timestamp + dstOffset + rawOffset)
-                // console.log("in: ", localDate.toLocaleString()); // Display current Tokyo date and time
+                var localDate = new Date(timestamp * 1000 + offsets); // Date object containing current time of city(timestamp + dstOffset + rawOffset)
+                // console.log("in: ", localDate.toLocaleString()); // Display current citydate and time
 
                 var refreshDate = new Date(); // get current date again to calculate time elapsed between targetDate and now
                 var millisecondsElapsed = refreshDate - targetDate; // get amount of time elapsed between targetDate and now
@@ -229,9 +215,9 @@ function whatTimeIsIt(lat, lon, tagId, conditionCode) {
                 var timeOfDay = "d";
                 if (localDate.getHours() < 7 || localDate.getHours() > 17) {
                     timeOfDay = "n";
-                    console.log("night ", localDate.getHours());
+                    console.log("night", "hour", localDate.getHours());
                 } else {
-                    console.log("day ", localDate.getHours());
+                    console.log("day", "hour", localDate.getHours());
                 }
                 doWeatherCondition(conditionCode, timeOfDay);
             }
@@ -246,16 +232,16 @@ function whatTimeIsIt(lat, lon, tagId, conditionCode) {
 // functions to toggle between Celcius & Fahrenheit
 function toggleUnits(unit) {
     if(unit === "imperial") {
-        console.log("imperial", convertCtoF(temp));
+        // console.log("imperial", convertCtoF(temp));
         document.getElementById("temp").innerHTML = convertCtoF(temp);
         document.getElementById("high").innerHTML = convertCtoF(high) + "&deg;";
         document.getElementById("low").innerHTML = convertCtoF(low) + "&deg;";
         document.getElementById("wind-speed").innerHTML = convertWindToMiles(windSpeed);
         document.getElementById("vis").innerHTML = convertVisToMiles(vis);
     } else if (unit === "metric") {
-        console.log("metric", temp);
-        console.log("vis",vis);
-        document.getElementById("temp").innerHTML = temp;
+        // console.log("metric", temp);
+        // console.log("vis",vis);
+        document.getElementById("temp").innerHTML = temp.toFixed();
         document.getElementById("high").innerHTML = high + "&deg;";
         document.getElementById("low").innerHTML = low + "&deg;";
         document.getElementById("wind-speed").innerHTML = windSpeed + " m/s";
@@ -513,35 +499,33 @@ function shoutOutToMyPeeps() {
         inline: "true"
     });
     $("#btn-Frankfurt").popup({
-        title: "She make the best Bear on a Waffle!",
-        content: "This is really for my favorite cat Cuddle Bear, but his owner (who has mad CSS skills) is pretty cool too. She can also use it to check the weather.😂😁",
+        html: "<div class='header'>She codes the best Bear on a Waffle!😂😂</div><div class='content'>This is really for my favorite cat Cuddle Bear!😍<br />His owner is pretty cool too. She has <strong>mad</strong> CSS skills!😎😁</div>",
         variation: "wide",
         position: "left center",
         inline: "true"
     });
     $("#btn-Lagos").popup({
         // title: "Representing Africa's West Side",
-        html: "<div class='header'>Representing Africa's West Side</div><div class='content'>This is for my friend in Nigeria who likes 🔥Simi🔥 and the finer things in life! 💍💎🍷😎<br /><br/ >('Original Baby', 'One Kain', 'Smile For Me', 'Love Don't Care', & 'Jamb Question' all get 👍👍👍)</div>",
+        html: "<div class='header'>Representing Africa's West Side</div><div class='content'>This is for my friend in Nigeria who likes 🔥Simi🔥 and the finer things in life! 💍💎🍷😎<br /><br/ >(BTW, 'Original Baby', 'One Kain', 'Smile For Me', 'Love Don't Care', & 'Jamb Question' all get 👍👍)</div>",
         variation: "wide",
         position: "left center",
         inline: "true"
     });
     $("#btn-Cape-Cod").popup({
         title: "Living the dream!",
-        content: "This is for my Twitter friend and fellow countryman on the East Coast who always has words of encourangement and support for his fellow coders.👏🙏🙆👌",
+        content: "This is for my Twitter friend and fellow countryman on the East Coast who always has words of encouragement and support for his fellow coders.👏🙏🙆👌",
         variation: "wide",
         position: "left center",
         inline: "true"
     });
     $("#btn-London").popup({
-        // title: "And the award goes to...🏆👏😎",
-        html: "<div class='header'>And the award goes to...🏆👏😎</div><div class='content'>This is for my friend in London💂 who's a star of the stage🎭🎶 and computer screen!💻😁<br />I refer to her arrow functions regularly.👍😃</div>",
+        html: "<div class='header'>And the award goes to...👏😎🏆</div><div class='content'>This is for my friend in London who's a star of the stage🎭🎶 and computer screen!💻😁<br /><br />I use her post on how to break down arrow functions regularly!👍😃</div>",
         variation: "wide",
         position: "left center",
         inline: "true"
     });
     $("#btn-Paris").popup({
-        title: "For my Ryan Reynolds Fan Club™ friends",
+        title: "For my Ryan Reynolds😍 Fan Club™ friends..",
         content: "I don't know where you two live but I think Paris is the perfect place for soul mates to meet for coffee.😝😁",
         variation: "wide",
         position: "left center",

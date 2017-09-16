@@ -5,8 +5,6 @@
     <title>FCC Local Weather App</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- <link href='https://fonts.googleapis.com/css?family=Yellowtail' rel='stylesheet'> -->
-    <!-- <link href='https://fonts.googleapis.com/css?family=Italianno' rel='stylesheet'> -->
     <link rel="stylesheet" type="text/css" href="semantic/semantic.css">
     <link href="css/style.css" rel="stylesheet">
 </head>
@@ -19,18 +17,11 @@
             <div class="ui text container" id="content">
                 <h1 id="header">Local Weather App</h1>
                 <i id="debug-btn" class="link bordered setting icon" ></i>
-                <!-- data-tooltip="Show/Hide Console" data-variation="inverted" -->
-                
-                <p><i>Click "Use my location" or check out some of the cities I have Twitter friends in.</i></p>
-                
-                <div class="ui buttons tiny" id="temp-toggle">
-                    <button class="ui button cf-toggle" id="metric">C</button>
-                    <div class="or"></div>
-                    <button class="ui button cf-toggle active positive" id="imperial">F</button>
-                </div>
-                <button class="ui button positive tiny" id="use-my-location">Use my location</button>
+
+                <p><i>Check out some of the cities I have Twitter friends in or click "Use my location".</i></p>
 
                 <div class="ui three column stackable grid" id="row">
+
                     <div class="four wide column">
                         <div class="compass">
                             <div id="compass-label">Wind Direction</div>
@@ -58,6 +49,41 @@
                             <div>Visibility: <span id="vis"></span></div>
                             <div class="hidden">Sunrise: <span id="sunrise"></span> - Sunset: <span id="sunset"></span></div>
                         </div>
+                        <!-- <a class="ui red empty circular label" id="bgImage-btn0"></a>
+                        <a class="ui orange empty circular label" id="bgImage-btn1"></a>
+                        <a class="ui yellow empty circular label" id="bgImage-btn2"></a>
+                        <a class="ui olive empty circular label" id="bgImage-btn3"></a>
+                        <a class="ui green empty circular label" id="bgImage-btn4"></a>
+                        <a class="ui teal empty circular label" id="bgImage-btn5"></a>
+                        <a class="ui blue empty circular label" id="bgImage-btn6"></a>
+                        <a class="ui violet empty circular label" id="bgImage-btn7"></a>
+                        <a class="ui purple empty circular label" id="bgImage-btn8"></a>
+                        <a class="ui pink empty circular label" id="bgImage-btn9"></a>
+                        <a class="ui brown empty circular label" id="bgImage-btn10"></a>
+                        <a class="ui grey empty circular label" id="bgImage-btn11"></a>
+                        <a class="ui black empty circular label" id="bgImage-btn12"></a>
+                        <a class="ui red empty circular label" id="bgImage-btn13"></a>
+                        <a class="ui orange empty circular label" id="bgImage-btn14"></a>
+                        <a class="ui yellow empty circular label" id="bgImage-btn15"></a> -->
+                    </div>
+                    <div class="four wide column" id="city-buttons">
+                        <button class="ui button" id="btn-Nairobi">Nairobi</button>
+                        <button class="ui button" id="btn-Frankfurt">Frankfurt</button>
+                        <button class="ui button" id="btn-Lagos">Lagos</button>
+                        <button class="ui button" id="btn-Cape-Cod">Cape Cod</button>
+                        <button class="ui button" id="btn-London">London</button>
+                        <button class="ui button" id="btn-Paris">Paris</button>
+                        <button class="ui button" id="btn-Los-Angeles">Los Angeles</button>
+                    </div>
+
+                    <div class="four wide column">
+                        <div class="ui buttons tiny" id="temp-toggle">
+                            <button class="ui button cf-toggle" id="metric">C</button>
+                            <div class="or"></div>
+                            <button class="ui button cf-toggle active positive" id="imperial">F</button>
+                        </div>
+                    </div>  
+                    <div class="eight wide column">
                         <a class="ui red empty circular label" id="bgImage-btn0"></a>
                         <a class="ui orange empty circular label" id="bgImage-btn1"></a>
                         <a class="ui yellow empty circular label" id="bgImage-btn2"></a>
@@ -75,14 +101,8 @@
                         <a class="ui orange empty circular label" id="bgImage-btn14"></a>
                         <a class="ui yellow empty circular label" id="bgImage-btn15"></a>
                     </div>
-                    <div class="four wide column" id="city-buttons">
-                        <button class="ui button" id="btn-Nairobi">Nairobi</button>
-                        <button class="ui button" id="btn-Frankfurt">Frankfurt</button>
-                        <button class="ui button" id="btn-Lagos">Lagos</button>
-                        <button class="ui button" id="btn-Cape-Cod">Cape Cod</button>
-                        <button class="ui button" id="btn-London">London</button>
-                        <button class="ui button" id="btn-Paris">Paris</button>
-                        <button class="ui button" id="btn-Los-Angeles">Los Angeles</button>
+                    <div class="four wide column">
+                        <button class="ui button positive tiny" id="use-my-location">Use my location</button>
                     </div>
                 </div>
 
@@ -119,9 +139,7 @@
 
     </main>
 
-    <footer>
-
-    </footer>
+    <footer></footer>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous"></script>
@@ -130,13 +148,11 @@
     <script src="js/script.js"></script>
     <script>
         $(document).ready(function () {
-            // do semantic-ui calls first before my init() function
-            $('.menu .item').tab(); // create the debug tabs,
-
-            shoutOutToMyPeeps() // set up the callouts,
+            // do semantic-ui calls before my init() function
+            $('.menu .item').tab(); // create the debug tabs
+            shoutOutToMyPeeps() // set up the callouts
 
             init(); // let's start the show!
-            
         });
     </script>
 </body>
