@@ -1,4 +1,4 @@
-// Let's start with LA cause... why not?
+// Let's start with Los Angeles cause... why not?
 let lat = 34.052234;
 let lon = -118.243685;
 
