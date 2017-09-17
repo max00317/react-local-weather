@@ -37,6 +37,12 @@ var bgImages = ["clear-d.jpeg", "clear-n.jpg", "clouds-n.jpeg", "cloudy-sky.jpg"
 
 // lets get started!
 function init() {
+    // pre-load bgImages
+    for (var i = 0; i < bgImages.length; ++i) {
+        var img = new Image();
+        img.src = "../images/" + bgImages[i];
+    }
+
     // setup button click event handlers
 
     // Imperial or Metric? Set click eventhandler to toggle values
