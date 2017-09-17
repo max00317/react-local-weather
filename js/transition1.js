@@ -73,8 +73,17 @@ function init() {
         var btn = document.getElementById("bgImage-btn" + i);
         btn.title = bgImages[i]; // set tooltip with image name
 
-        btn.addEventListener("click", function () {
-            updateBackgroundImage(bgImages[i]);
+        // btn.addEventListener("click", function () {
+        //     $("#bg").fadeOut(function () {
+        //         updateBackgroundImage(bgImages[i]);
+        //         $("#bg").fadeIn(2000);
+        //     }, 2000);
+        // });
+        $("#bgImage-btn" + i).click(function () {
+            $("#bg").fadeOut(300, function () {
+                updateBackgroundImage(bgImages[i]);
+                $("#bg").fadeIn(700);
+            });
         });
     }
 
@@ -386,7 +395,8 @@ function doWeatherCondition(conditionCode, timeDay) {
 }
 
 function updateBackgroundImage(img) {
-    $("body").css("background-image", "url('../images/" + img + "')");
+    // $("body").css("background-image", "url('../images/" + img + "')");
+    $("#bg").css("background-image", "url('../images/" + img + "')");
 }
 
 // Debug panel, object iteration, & raw json output
