@@ -1,0 +1,196 @@
+body { border: 1px solid #c24; background-color:#333; }
+
+#background-images {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+#bg {
+    /* background: url('../images/purple-tree.jpg') center center / cover no-repeat fixed; */
+    background-attachment: fixed;
+    background-position-x: center;
+    background-position-y: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* new  */
+    width: 100%;
+    height: 100%;
+    border: 1px solid #4a6;
+    position: fixed;
+    z-index: -1;
+}
+#bImg1, #bImg2 {
+    position: absolute;
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    background-attachment: fixed;
+    background-position-x: center;
+    background-position-y: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+#bImg1 {
+    z-index: 3;
+    /* display: none; */
+    /* opacity: 1; */
+}
+#bImg2 {
+    display: none;
+    /* opacity: 0; */
+    z-index: 2;
+    /* background-image: url(../images/wind-d.jpg); */
+}
+#main {
+    opacity: 0;
+    transition: opacity 1.0s ease-in-out;
+    z-index :10;
+    position: relative;
+}
+/* #header { display: inline-block; } */
+
+.ui.masthead.segment { 
+    /* min-height: 50vh; */
+    border-bottom: none;
+}
+
+#content {
+    background-color:#EEE;
+    opacity:0.8;
+    border: 10px solid #666;
+    border-radius: 20px;
+    padding: 20px;
+    position: relative;
+    /* color: #fff; */
+}
+#debug-btn {
+    /* padding-bottom: 6px; */
+    /* vertical-align: top; */
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.ui.grid { margin-top: 0; }
+.ui.grid > .column:not(.row) { padding-top: 0; }
+
+/* Compass */
+#compass-label { margin: 0;}
+#compass-deg {margin-bottom:6px;}
+
+.compass { 
+    margin: 16px 0; 
+    position: relative;
+    width:100%; 
+    /* height:200px; */
+}
+.arrow {
+    position: absolute;
+    z-index: 300;
+    /* width: 160px;
+    height: 160px; */
+    transform: rotate(0);
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
+    max-width: 180px;
+}
+.arrow:hover {
+    transform: rotate(225deg);
+    transition: transform 0.7s ease-in-out;
+}
+.disc {
+    /* position: absolute; */
+    z-index: 200;
+    /* width: 160px;
+    height: 160px; */
+    width: 100%;
+    max-width: 180px;
+}
+#compass-stats { padding: 1em 0.6em; }
+#temp-group{ margin-top: 20px; border:1px solid #666; padding-top: 6px;}
+#temp-toggle { border-left: unset;}
+#temp-toggle .button:first-child { border-left: 1px solid #666; border-top-left-radius: .28571429rem; border-bottom-left-radius:  .28571429rem;}
+
+/* weather center panel */
+#city { margin: 20px 0 0 0; display: inline-block; }
+#icon { margin-bottom: -6px; }
+#temp {
+    display: inline-block;
+    /* margin: 24px 0; */
+    margin: 10px 0 0;
+    font-size: 4em;
+    position: relative;
+    color: darkgreen; 
+}
+#temp::after {
+    content: "\00b0";
+    color: darkgreen; 
+    font-size: 28px;
+    position: absolute;
+    top: -9px;
+    right: -14px;
+}
+#temp-deg { font-size: 0.8em; vertical-align: top;}
+#high-low { margin-bottom: 30px; margin-top: -5px;}
+
+#sky, #humidity,  #wind-dir, #wind-speed, #sunrise, #sunset, #vis { 
+    color: darkgreen; 
+    /* font-weight: bold;  */
+    font-style: italic;
+}
+
+/* location buttons */
+.ui.buttons .or::before {
+    line-height: 1.60em;
+    border: 1px solid #999;
+    font-size: 14px;
+    top: 55%;
+    background-color: #f6f6f6;
+}
+.ui.button, .ui.buttons .button {
+    border: 1px solid #666;
+    margin: 1px 0;
+}
+#city-buttons { margin-top: 20px; z-index: 400;}
+#city-buttons .ui.button {
+    width: 120px;
+    /* margin: 1px 0; */
+}
+
+/* debug panel */
+#debug-container {display: none;}
+#debug-content {
+    background: #eee;
+    padding: 10px 20px 20px 20px;
+    border: 1px solid #999;
+  }
+    .debug {
+      clear:both;
+    }
+      #hard-coded {
+        position: relative;
+      }
+      #hard-coded dl {
+        /* float: left; */
+        /* padding: 0 40px 0 30px; */
+      }
+      #hard-coded dl:last-child {
+        padding-right: 10px;
+      }
+
+.hidden {display: none;}
+
+#traverse-json, #json-fields-loop {
+    height: 270px;
+}
+#debug-content { height:380px;}
+#traverse-json, #json-fields-loop {
+    overflow-y: scroll;
+}
+.ui.popup.wide.center.transition {
+    width: 340px;
+}

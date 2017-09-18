@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Transition 1</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="semantic/semantic.min.css">
+    <link href="css/transition3.css" rel="stylesheet">
+</head>
+
+<body>
+    <header></header>
+    <div id="background-images">
+        <div id="bImg1" class="bgImages">Img 1 - front</div>
+        <div id="bImg2" class="bgImages"><br>Img 2 - back</div>
+    </div>
+    <!-- <div id="bg"></div> -->
+    <main class="ui fluid container" role="main" id="main">
+        <section class="ui vertical masthead center aligned segment">
+            <div class="ui text container" id="content">
+                <h1 id="header">Local Weather App</h1>
+                <i id="debug-btn" class="link bordered setting icon" ></i>
+
+                <p><i>Check out some of the cities I have Twitter friends in or click "Use my location".</i></p>
+
+                <div class="ui three column stackable grid" id="row">
+
+                    <div class="four wide column">
+                        <div class="compass">
+                            <div id="compass-label">Wind Direction</div>
+                            <div id="compass-deg"></div>
+                            <img class="arrow" src="images/arrow.svg" alt="arrow">
+                            <img class="disc" src="images/disc.svg" alt="disc"> 
+                        </div>
+                        <div class="ui segment" id="compass-stats">
+                            <div class="hidden">Code: <span id="conditionCode"></span></div>
+                            <div>Lat: <span id="lat"></span></div>
+                            <div>Lon: <span id="lon"></span></div>
+                        </div>
+                    </div>
+                    <div class="eight wide column">
+                        <div class="ui segment" id="temp-group">
+                            <div id="loc-header-container">
+                                <div class="ui large header" id="city"></div>
+                                <img id="icon" src="">
+                            </div>
+                            <div id="localTime">&nbsp;</div>
+                            <div class="ui huge header" id="temp"></div>
+                            <div id="high-low"><span id="high" class="ui red label" data-tooltip="Today's High"></span> <span id="low" class="ui blue label" data-tooltip="Today's Low"></span></div>
+                            <div><span id="sky"></span> with <span id="humidity"></span> humidity</div>
+                            <div>Wind: <span id="wind-dir"></span> at <span id="wind-speed"></span></div>
+                            <div>Visibility: <span id="vis"></span></div>
+                            <div class="hidden">Sunrise: <span id="sunrise"></span> - Sunset: <span id="sunset"></span></div>
+                        </div>
+                    </div>
+                    <div class="four wide column" id="city-buttons">
+                        <button class="ui button" id="btn-Nairobi">Nairobi</button>
+                        <button class="ui button" id="btn-Frankfurt">Frankfurt</button>
+                        <button class="ui button" id="btn-Lagos">Lagos</button>
+                        <button class="ui button" id="btn-Cape-Cod">Cape Cod</button>
+                        <button class="ui button" id="btn-London">London</button>
+                        <button class="ui button" id="btn-Paris">Paris</button>
+                        <button class="ui button" id="btn-Los-Angeles">Los Angeles</button>
+                    </div>
+
+                    <div class="four wide column">
+                        <div class="ui buttons tiny" id="temp-toggle">
+                            <button class="ui button cf-toggle" id="metric">C</button>
+                            <div class="or"></div>
+                            <button class="ui button cf-toggle active positive" id="imperial">F</button>
+                        </div>
+                    </div>  
+                    <div class="eight wide column">
+                        <a class="ui red empty circular label" id="bgImage-btn0"></a>
+                        <a class="ui orange empty circular label" id="bgImage-btn1"></a>
+                        <a class="ui yellow empty circular label" id="bgImage-btn2"></a>
+                        <a class="ui olive empty circular label" id="bgImage-btn3"></a>
+                        <a class="ui green empty circular label" id="bgImage-btn4"></a>
+                        <a class="ui teal empty circular label" id="bgImage-btn5"></a>
+                        <a class="ui blue empty circular label" id="bgImage-btn6"></a>
+                        <a class="ui violet empty circular label" id="bgImage-btn7"></a>
+                        <a class="ui purple empty circular label" id="bgImage-btn8"></a>
+                        <a class="ui pink empty circular label" id="bgImage-btn9"></a>
+                        <a class="ui brown empty circular label" id="bgImage-btn10"></a>
+                        <a class="ui grey empty circular label" id="bgImage-btn11"></a>
+                        <a class="ui black empty circular label" id="bgImage-btn12"></a>
+                        <a class="ui red empty circular label" id="bgImage-btn13"></a>
+                        <a class="ui orange empty circular label" id="bgImage-btn14"></a>
+                        <a class="ui yellow empty circular label" id="bgImage-btn15"></a>
+                    </div>
+                    <div class="four wide column">
+                        <button class="ui button positive tiny" id="use-my-location">Use my location</button>
+                    </div>
+                </div>
+
+            </div> 
+        </section>
+
+        <div class="ui text container" id="debug-container">
+        <h2 class ="ui small center aligned top attached block header">Debug Info</h2>
+        <section class="ui attached segment" id="debug-content">
+
+            <div class="ui top attached tabular stackable menu">
+                <a class="active item column" data-tab="first">Hard coded</a>
+                <a class="item column" data-tab="second">Traverse JSON</a>
+                <a class="item column" data-tab="third">JSON Fields Loop</a>
+                <a class="item column" data-tab="fourth">Raw Output</a>
+            </div>
+
+            <div class="ui bottom attached active tab segment" data-tab="first" id="hard-coded">
+                
+            </div>
+            <div class="ui bottom attached tab segment " data-tab="second">
+                <div id="traverse-json"></div>
+            </div>
+            <div class="ui bottom attached tab segment" data-tab="third">
+                <!-- <h3>JSON Fields loop</h3> -->
+                <div id="json-fields-loop"></div>
+            </div>
+            <div class="ui bottom attached tab segment" data-tab="fourth">
+                <!-- <h3>Raw Output</h3> -->
+                <div id="output"></div>
+            </div>
+        </section>
+        </div>
+
+    </main>
+
+    <footer></footer>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+    <script src="semantic/semantic.min.js"></script>
+    <!-- <script src="https://use.fontawesome.com/b8e54d5fef.js"></script> -->
+    <script src="js/transition3.js"></script>
+    <script>
+        $(document).ready(function () {
+            // do semantic-ui calls before my init() function
+            $('.menu .item').tab(); // create the debug tabs
+            shoutOutToMyPeeps() // set up the callouts
+
+            init(); // let's start the show!
+        });
+    </script>
+</body>
+
+</html>
