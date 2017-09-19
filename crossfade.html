@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>crossfade2</title>
+        <title>crossfade</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
@@ -118,7 +118,7 @@
                     if($('#background-images div.front').attr("rel") !== $(this).attr("rel")) { //if clicked link isn't already the active image
                         console.log(".front background-image ",$(".front").css("background-image") );
                         $("#background-images div.back").attr("rel",  $(this).attr("rel")); // set rel to the image name
-                        $("#background-images div.back").css("background-image","url('" + pathToImages + $(this).attr('rel') + "')"); // set background-image to on .back div
+                        $("#background-images div.back").css("background-image","url('" + pathToImages + $(this).attr('rel') + "')"); // set background-image on .back div
                         console.log("rel", $(this).attr("rel"));
                         console.log("set rel on div.back", $("#background-images div.back").css("background-image"));
 

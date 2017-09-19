@@ -6,6 +6,8 @@ let lon = -118.243685;
 const GeocodeAPIKey = "AIzaSyATszLTrO3Njt52156ddkyk85WcFRzgZEg"; // will use this later...
 const TimeZoneAPIKey = "AIzaSyB80idMRjgP_qHfbqMZaYOuJSnGwME5LSY";
 const DaysOfWeek = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat", "Sun"];
+const crossFadeTime = 1200;
+const pathToImages = "../images/";
 
 // json vars
 let interval = null; // used to stop setInterval in whatTimeIsIt function so we can set a new time
@@ -33,10 +35,24 @@ var locations = {
 };
 
 // allows us to change background images
-var bgImages = ["clear-d.jpeg", "clear-n.jpg", "clouds-n.jpeg", "cloudy-sky.jpg", "clouds-pink.jpeg", "drizzle-d.jpg", "fog.jpg", "haze-d.jpg", "haze-n.jpeg", "purple-tree.jpg", "rain-d.jpeg", "rain-thunder.jpg", "snow-d.jpeg", "snow-n.jpeg", "wind-d.jpg", "wind-n.jpeg"];
+var bgImages = ["clear-d.jpeg", "clear-n.jpg", "clouds-n.jpeg", "cloudy-sky.jpg", "clouds-pink.jpeg", "drizzle-d.jpg", "fog.jpg", "night-fog1.jpg", "night-fog3.jpg", "purple-tree.jpg",
+    // "rain-d.jpeg",
+    "rain1.jpg",
+    "rain-thunder.jpg",
+    "snow-d.jpeg",
+    "snow-n.jpeg", "wind-d.jpg", "wind-n.jpeg"];
 
 // lets get started!
 function init() {
+    // pre-load bgImages
+    for (var i = 0; i < bgImages.length; ++i) {
+        var img = new Image();
+        img.src = "../images/" + bgImages[i];
+    }
+    // for initial load
+    $("#main").css("opacity", "1.0");
+    $("#background-images").css("opacity", "1.0");
+
     // setup button click event handlers
 
     // Imperial or Metric? Set click eventhandler to toggle values
@@ -72,11 +88,16 @@ function init() {
     for (let i = 0; i < bgImages.length; i++) {
         var btn = document.getElementById("bgImage-btn" + i);
         btn.title = bgImages[i]; // set tooltip with image name
+        btn.setAttribute("rel", bgImages[i]); // set attribute for use in updateBackgroundImage()
 
         btn.addEventListener("click", function () {
             updateBackgroundImage(bgImages[i]);
         });
     }
+    // Above code can be replaced by creating bg-links dynamically - see crossfade.html #107-#114
+    // $("bg-controls a.label").click(function () {
+    //     updateBackgroundImage(bgImages[i]);
+    // });
 
     // debug panel
     $("#debug-btn").click(function () {
@@ -101,9 +122,9 @@ function getGeolocation() {
 
 // ajax call using jquery (we use straight javascript ajax further down)
 function getWeather(lat1, lon1) {
-
     lat = lat1;
     lon = lon1;
+
     $.ajax({
         url: "https://fcc-weather-api.glitch.me/api/current",
         dataType: "jsonp",
@@ -118,6 +139,7 @@ function getWeather(lat1, lon1) {
 
 // throw it up on the page
 function displayWeather(json) {
+
     console.log(json);
     console.log("global temp ",json.main.temp);
 
@@ -335,7 +357,8 @@ function doWeatherCondition(conditionCode, timeDay) {
             break;
         case (conditionCode < 540): //Rain
             if (timeDay === "d") {
-                bgImage = "rain-d.jpeg";
+                // bgImage = "rain-d.jpeg";
+                bgImage = "rain1.jpg";
             } else {
                 bgImage = "rain-on-black.jpg";
             }
@@ -351,7 +374,7 @@ function doWeatherCondition(conditionCode, timeDay) {
             if (timeDay === "d") {
                 bgImage = "fog.jpg";
             } else {
-                bgImage = "haze-d.jpg";
+                bgImage = "night-fog3.jpg";
             }
             break;
         case (conditionCode === 800): //Clear
@@ -369,7 +392,7 @@ function doWeatherCondition(conditionCode, timeDay) {
             }
             break;
         case (conditionCode < 910): //Extreme - tropical storm, hail, hurricane, tornado
-            bgImage = "a.jpeg";
+            bgImage = "rain-thunder.jpg";
             break;
         case (conditionCode < 970): //Additional - breeze, wind, gale
             if (timeDay === "d") {
@@ -386,7 +409,22 @@ function doWeatherCondition(conditionCode, timeDay) {
 }
 
 function updateBackgroundImage(img) {
-    $("body").css("background-image", "url('../images/" + img + "')");
+    // $("body").css("background-image", "url('" + pathToImages + img + "')");
+    if ($("#background-images div.front").attr("rel") !== img) { // if this isn't already the bg image
+        $("background-images div.back").attr("rel", img); // set rel to image name
+        $("#background-images div.back").css("background-image", "url('" + pathToImages + img + "')"); //set background-image on .back div
+       
+        crossFadeImages();  // do the magic
+    }
+}
+
+function crossFadeImages() {
+    var $front = $("#background-images .front");
+    var $back = $("#background-images .back");
+    $front.fadeOut(crossFadeTime, function() { //fade out the top image
+        $front.addClass("back").removeClass('front').show();//remove class which resets z-index to 1 and unhide the image (which is now behind 'back') with show()   
+        $back.addClass('front').removeClass('back'); // give new image z-index of 3 from z-index 2 
+    });
 }
 
 // Debug panel, object iteration, & raw json output

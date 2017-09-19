@@ -13,6 +13,10 @@
 
 <body>
     <header></header>
+    <div id="background-images">
+        <div class="bgImages front" id="bgImg1"><div class="view"><!--Img 1 - front--></div></div>
+        <div class="bgImages back" id="bgImg2"><br><div class="view"><!--Img 2 - back--></div></div>
+    </div>
 
     <main class="ui fluid container" role="main" id="main">
         <section class="ui vertical masthead center aligned segment">
@@ -27,28 +31,28 @@
                     <div class="four wide column">
                         <div class="compass">
                             <div id="compass-label">Wind Direction</div>
-                            <div id="compass-deg"></div>
+                            <div class="animate" id="compass-deg"></div>
                             <img class="arrow" src="images/arrow.svg" alt="arrow">
                             <img class="disc" src="images/disc.svg" alt="disc"> 
                         </div>
                         <div class="ui segment" id="compass-stats">
                             <div class="hidden">Code: <span id="conditionCode"></span></div>
-                            <div>Lat: <span id="lat"></span></div>
-                            <div>Lon: <span id="lon"></span></div>
+                            <div>Lat: <span class="animate" id="lat"></span></div>
+                            <div>Lon: <span class="animate" id="lon"></span></div>
                         </div>
                     </div>
                     <div class="eight wide column">
                         <div class="ui segment" id="temp-group">
-                            <div id="loc-header-container">
+                            <div class="animate" id="loc-header-container">
                                 <div class="ui large header" id="city"></div>
                                 <img id="icon" src="">
                             </div>
-                            <div id="localTime">&nbsp;</div>
-                            <div class="ui huge header" id="temp"></div>
-                            <div id="high-low"><span id="high" class="ui red label" data-tooltip="Today's High"></span> <span id="low" class="ui blue label" data-tooltip="Today's Low"></span></div>
-                            <div><span id="sky"></span> with <span id="humidity"></span> humidity</div>
-                            <div>Wind: <span id="wind-dir"></span> at <span id="wind-speed"></span></div>
-                            <div>Visibility: <span id="vis"></span></div>
+                            <div class="animate" id="localTime">&nbsp;</div>
+                            <div class="ui huge header animate" id="temp"></div>
+                            <div id="high-low"><span id="high" class="ui red label animate" data-tooltip="Today's High"></span> <span id="low" class="ui blue label animate" data-tooltip="Today's Low"></span></div>
+                            <div><span class="animate" id="sky"></span> with <span class="animate" id="humidity"></span> humidity</div>
+                            <div>Wind: <span class="animate" id="wind-dir"></span> at <span class="animate" id="wind-speed"></span></div>
+                            <div>Visibility: <span class="animate" id="vis"></span></div>
                             <div class="hidden">Sunrise: <span id="sunrise"></span> - Sunset: <span id="sunset"></span></div>
                         </div>
                     </div>
@@ -69,7 +73,7 @@
                             <button class="ui button cf-toggle active positive" id="imperial">F</button>
                         </div>
                     </div>  
-                    <div class="eight wide column">
+                    <div class="eight wide column bg-controls">
                         <a class="ui red empty circular label" id="bgImage-btn0"></a>
                         <a class="ui orange empty circular label" id="bgImage-btn1"></a>
                         <a class="ui yellow empty circular label" id="bgImage-btn2"></a>
