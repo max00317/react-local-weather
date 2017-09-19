@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>crossfade carousel</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+        #background-images {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        #bgImg1, #bgImg2, #bgImg3 {
+            position: absolute;
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            z-index: 1;
+            background-attachment: fixed;
+            background-position-x: center;
+            background-position-y: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        #bgImg1 { background-image: url("images/clear-d.jpeg"); }
+        #bgImg2 { background-image: url("images/cloudy-sky.jpg"); z-index: 2;}
+        #bgImg3 { background-image: url("images/fog.jpg"); }
+        </style>
+    </head>
+    <body>
+        <div id="background-images">
+            <div class="bgImages active" id="bgImg1">Img 1 - front</div>
+            <div class="bgImages" id="bgImg2"><br>Img 2 - back</div>
+            <div class="bgImages" id="bgImg3"><br><br>Img 3 - way back</div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script>
+            function cycleImages() {
+                var $active = $("#background-images .active");
+                var $next = ($active.next().length > 0) ? $active.next() : $("#background-images div:first");
+                $next.css("z-index", 2); // move the next img up the stack
+                $active.fadeOut(1500, function() { //fade out the top image
+                    $active.css("z-index", 1).show().removeClass("active"); //reset z-index and unhide the image
+                    $next.css("z-index", 3).addClass("active"); //make the next image the top one
+                });
+            }
+
+            $(document).ready(function() {
+                $('#cycler img').show();
+                // run every 3 seconds
+                setInterval(cycleImages, 3000);
+            })
+        </script>
+    </body>
+</html>
