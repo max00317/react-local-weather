@@ -1,24 +1,25 @@
 // Let's start with Los Angeles cause... why not?
-let lat = 34.052234;
-let lon = -118.243685;
+
+var lat = 34.052234;
+var lon = -118.243685;
 
 // Google Maps Geocoding API key
 const GeocodeAPIKey = "AIzaSyATszLTrO3Njt52156ddkyk85WcFRzgZEg"; // will use this later...
 const TimeZoneAPIKey = "AIzaSyB80idMRjgP_qHfbqMZaYOuJSnGwME5LSY";
 const DaysOfWeek = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat", "Sun"];
 const crossFadeTime = 1200;
-const pathToImages = "../images/";
+const pathToImages = "images/";
 
 // json vars
-let interval = null; // used to stop setInterval in whatTimeIsIt function so we can set a new time
-let currentUnit = "imperial"; // keep track of current unit
+var interval = null; // used to stop setInterval in whatTimeIsIt function so we can set a new time
+var currentUnit = "imperial"; // keep track of current unit
 
-let temp = 0;
-let high = 0;
-let low = 0;
-let windSpeed = 0;
-let windDegree = 0; // default val in case it isn't returned in json
-let vis = 0;
+var temp = 0;
+var high = 0;
+var low = 0;
+var windSpeed = 0;
+var windDegree = 0; // default val in case it isn't returned in json
+var vis = 0;
 
 // locations for each of the buttons
 var locations = {
@@ -47,7 +48,7 @@ function init() {
     // pre-load bgImages
     for (var i = 0; i < bgImages.length; ++i) {
         var img = new Image();
-        img.src = "../images/" + bgImages[i];
+        img.src = "images/" + bgImages[i];
     }
     // for initial load
     $("#main").css("opacity", "1.0");
@@ -85,7 +86,8 @@ function init() {
 
     // loop through bgImages array & create an event handler for each bgImage button
     // need to use 'let' in for..loop for block level scope: https://stackoverflow.com/questions/750486/javascript-closure-inside-loops-simple-practical-example
-    for (let i = 0; i < bgImages.length; i++) {
+    /*for (i = 0; i < bgImages.length; i++) {
+        console.log(bgImages[i]);
         var btn = document.getElementById("bgImage-btn" + i);
         btn.title = bgImages[i]; // set tooltip with image name
         btn.setAttribute("rel", bgImages[i]); // set attribute for use in updateBackgroundImage()
@@ -93,7 +95,17 @@ function init() {
         btn.addEventListener("click", function () {
             updateBackgroundImage(bgImages[i]);
         });
-    }
+    }*/
+
+    bgImages.forEach(function changeImages(el, index) {
+        var btn = document.getElementById("bgImage-btn" + index);
+        btn.title = el; // set tooltip with image name
+        btn.setAttribute("rel", el); // set attribute for use in updateBackgroundImage()
+
+        btn.addEventListener("click", function () {
+            updateBackgroundImage(el);
+        });
+    });
     // Above code can be replaced by creating bg-links dynamically - see crossfade.html #107-#114
     // $("bg-controls a.label").click(function () {
     //     updateBackgroundImage(bgImages[i]);
