@@ -25,11 +25,11 @@ body { background-color: #333; }
     background-repeat: no-repeat;
 }
 #bgImg1 {
-    background-image: url("images/fog.jpg");
+    background-image: url("../images/fog.jpg");
     background-color: #333;
 }
 #bgImg2 { 
-    background-image: url("images/cloudy-sky.jpg");
+    background-image: url("../images/cloudy-sky.jpg");
     background-color: #333;
 }
 
