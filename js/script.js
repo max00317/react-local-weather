@@ -112,8 +112,8 @@ function init() {
 function getGeolocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
-            lat = position.coords.latitude;
-            lon = position.coords.longitude;
+            lat = (position.coords.latitude).toFixed(6);
+            lon = (position.coords.longitude).toFixed(6);
             console.log("lon:", lon, "lat", lat);
             getWeather(lat, lon);
         });
