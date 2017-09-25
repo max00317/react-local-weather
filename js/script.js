@@ -446,7 +446,7 @@ function buildDebugPanel(json) {
     html += "<dl class='ui segment'>";
     html += "<dt>Conditions:</dt><dd>" + json.weather[0].main + "</dd>"; // weather[0].main
     html += "<dt>Description:</dt><dd>" + json.weather[0].description + "</dd>"; //weather[0].description
-    html += "<dt>Icon:</dt><dd>" + "<img id='icon' src='" + json.weather[0].icon + "'></dd>"; //weather[0].icon
+    html += "<dt>Icon:</dt><dd>" + "<img id='icon' src='" + (json.weather[0].icon || "#") + "'></dd>"; //weather[0].icon
     html += "</dl>";
 
     html += "<dl class='ui segment'>";
