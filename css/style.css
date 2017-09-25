@@ -7,6 +7,8 @@ body { background-color:#333; }
     height: 100%;
 
     opacity: 0;
+    -webkit-transition: opacity 2.0s ease-in-out;
+    -o-transition: opacity 2.0s ease-in-out;
     transition: opacity 2.0s ease-in-out;
 }
 #bgImg1, #bgImg2 {
@@ -30,6 +32,8 @@ body { background-color:#333; }
 
 #main {
     opacity: 0;
+    -webkit-transition: opacity 1.0s ease-in-out;
+    -o-transition: opacity 1.0s ease-in-out;
     transition: opacity 1.0s ease-in-out;
     z-index :10;
     position: relative;
@@ -75,14 +79,26 @@ body { background-color:#333; }
         z-index: 300;
         /* width: 160px;
         height: 160px; */
-        transform: rotate(0);
+        -webkit-transform: rotate(0);
+            -ms-transform: rotate(0);
+                transform: rotate(0);
+        -webkit-transition: -webkit-transform 0.5s ease-in-out;
+        transition: -webkit-transform 0.5s ease-in-out;
+        -o-transition: transform 0.5s ease-in-out;
         transition: transform 0.5s ease-in-out;
+        transition: transform 0.5s ease-in-out, -webkit-transform 0.5s ease-in-out;
         width: 100%;
         max-width: 180px;
     }
     .arrow:hover {
-        transform: rotate(225deg);
+        -webkit-transform: rotate(225deg);
+            -ms-transform: rotate(225deg);
+                transform: rotate(225deg);
+        -webkit-transition: -webkit-transform 0.7s ease-in-out;
+        transition: -webkit-transform 0.7s ease-in-out;
+        -o-transition: transform 0.7s ease-in-out;
         transition: transform 0.7s ease-in-out;
+        transition: transform 0.7s ease-in-out, -webkit-transform 0.7s ease-in-out;
     }
     .disc {
         /* position: absolute; */
