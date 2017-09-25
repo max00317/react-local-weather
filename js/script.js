@@ -48,7 +48,7 @@ function init() {
     // pre-load bgImages
     for (var i = 0; i < bgImages.length; ++i) {
         var img = new Image();
-        img.src = "images/" + bgImages[i];
+        img.src = pathToImages + bgImages[i];
     }
     // for initial load
     $("#main").css("opacity", "1.0");
