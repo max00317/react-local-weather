@@ -1,4 +1,4 @@
-body { background-color:#333; }
+body { background-color: #333; }
 #background-images {
     position: fixed;
     top: 0;
@@ -7,9 +7,9 @@ body { background-color:#333; }
     height: 100%;
 
     opacity: 0;
-    -webkit-transition: opacity 2.0s ease-in-out;
-    -o-transition: opacity 2.0s ease-in-out;
-    transition: opacity 2.0s ease-in-out;
+    -webkit-transition: opacity 1.0s ease-in-out;
+    -o-transition: opacity 1.0s ease-in-out;
+    transition: opacity 1.0s ease-in-out;
 }
 #bgImg1, #bgImg2 {
     position: absolute;
@@ -24,8 +24,14 @@ body { background-color:#333; }
     background-size: cover;
     background-repeat: no-repeat;
 }
-/* #bgImg1 { background-image: url("images/fog.jpg"); } */
-/* #bgImg2 { background-image: url("images/cloudy-sky.jpg"); } */
+#bgImg1 {
+    background-image: url("images/fog.jpg");
+    background-color: #333;
+}
+#bgImg2 { 
+    background-image: url("images/cloudy-sky.jpg");
+    background-color: #333;
+}
 
 #background-images div.front { z-index: 3; }
 #background-images div.back { z-index: 2; }

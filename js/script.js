@@ -156,6 +156,11 @@ function displayWeather(json) {
 
     // fill page with the remaining data (using vanilla js here)
     document.getElementById("city").innerHTML = json.name;
+    if (typeof json.weather[0].icon === "undefined") {
+        document.getElementById("icon").style.display = "none";
+    } else {
+        document.getElementById("icon").style.display = "inline-block";
+    }
     document.getElementById("icon").src = json.weather[0].icon || "";
     document.getElementById("sky").innerHTML = json.weather[0].description.charAt(0).toUpperCase() + json.weather[0].description.slice(1);
     document.getElementById("humidity").innerHTML = json.main.humidity + "%";

@@ -30,29 +30,29 @@
 
                     <div class="four wide column">
                         <div id="compass-label">Wind Direction</div>
-                        <div class="animate" id="compass-deg"></div>
+                        <div class="animate" id="compass-deg">0.00</div>
                         <div class="compass">
                             <img class="arrow" src="images/arrow.svg" alt="arrow">
                             <img class="disc" src="images/disc.svg" alt="disc"> 
                         </div>
                         <div class="ui segment" id="compass-stats">
                             <div class="hidden">Code: <span id="conditionCode"></span></div>
-                            <div>Lat: <span class="animate" id="lat"></span></div>
-                            <div>Lon: <span class="animate" id="lon"></span></div>
+                            <div>Lat: <span class="animate" id="lat">0.000000</span></div>
+                            <div>Lon: <span class="animate" id="lon">0.000000</span></div>
                         </div>
                     </div>
                     <div class="eight wide column">
                         <div class="ui segment" id="temp-group">
                             <div class="animate" id="loc-header-container">
-                                <div class="ui large header" id="city"></div>
-                                <img id="icon" src="#">
+                                <div class="ui large header" id="city">City</div>
+                                <img id="icon" src="#" alt="icon">
                             </div>
-                            <div class="animate" id="localTime">&nbsp;</div>
-                            <div class="ui huge header animate" id="temp"></div>
-                            <div id="high-low"><span id="high" class="ui red label animate" data-tooltip="Today's High"></span> <span id="low" class="ui blue label animate" data-tooltip="Today's Low"></span></div>
-                            <div><span class="animate" id="sky"></span> with <span class="animate" id="humidity"></span> humidity</div>
-                            <div>Wind: <span class="animate" id="wind-dir"></span> at <span class="animate" id="wind-speed"></span></div>
-                            <div>Visibility: <span class="animate" id="vis"></span></div>
+                            <div class="animate" id="localTime">Time &amp; Day</div>
+                            <div class="ui huge header animate" id="temp">0</div>
+                            <div id="high-low"><span id="high" class="ui red label animate" data-tooltip="Today's High">Hi</span> <span id="low" class="ui blue label animate" data-tooltip="Today's Low">Low</span></div>
+                            <div><span class="animate" id="sky">Condition</span> with <span class="animate" id="humidity">0%</span> humidity</div>
+                            <div>Wind: <span class="animate" id="wind-dir">Direction</span> at <span class="animate" id="wind-speed">0 mph</span></div>
+                            <div>Visibility: <span class="animate" id="vis">0.00 mi</span></div>
                             <div class="hidden">Sunrise: <span id="sunrise"></span> - Sunset: <span id="sunset"></span></div>
                         </div>
                     </div>
