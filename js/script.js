@@ -92,9 +92,9 @@ function init() {
         btn.title = bgImages[i]; // set tooltip with image name
         btn.setAttribute("rel", bgImages[i]); // set attribute for use in updateBackgroundImage()
 
-        btn.addEventListener("click", function () {
-            updateBackgroundImage(bgImages[i]);
-        });
+        btn.addEventListener("click", function (idx) {
+            updateBackgroundImage(bgImages[idx]);
+        }(i));
     }*/
 
     bgImages.forEach(function changeImages(el, index) {
