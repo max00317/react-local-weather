@@ -2,11 +2,13 @@
 
 This is a Local Weather App that provides weather conditions for one of several cities. It uses Geolocation for the local city.
 
+![weather app](images/portfolio_weather2.jpg)
+
 It is built using Semantic UI, jQuery, Geolocation API, SVG, CSS3 Animation, Ajax, and Web APIs.
 
 You can test it at the following link.
 
-Live Demo - [http://local-weather-app.netlify.com](http://local-weather-app.netlify.com/)
+- Live Demo - [http://local-weather-app.netlify.com](http://local-weather-app.netlify.com/)
 
 See below for [screenshots](#screenshots).
 
