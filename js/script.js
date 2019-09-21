@@ -4,7 +4,7 @@ var lat = 34.052234;
 var lon = -118.243685;
 
 // Google Maps Geocoding API key
-const GeocodeAPIKey = "AIzaSyATszLTrO3Njt52156ddkyk85WcFRzgZEg"; // will use this later...
+// const GeocodeAPIKey = "AIzaSyATszLTrO3Njt52156ddkyk85WcFRzgZEg"; // will use this later...
 const TimeZoneAPIKey = "AIzaSyB80idMRjgP_qHfbqMZaYOuJSnGwME5LSY";
 const DaysOfWeek = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat", "Sun"];
 const crossFadeTime = 1200;
